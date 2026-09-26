@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OOP in JavaScript – Easy Notes</title>
+<style>
+  :root {
+    --bg: #eef3f1;
+    --card: #ffffff;
+    --ink: #1d2a28;
+    --muted: #5b6b68;
+    --accent: #1f7a5c;
+    --theory-bg: #f4f9f7;
+    --code-bg: #20302d;
+    --code-ink: #e6f0ec;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: "Segoe UI", system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.6;
+  }
+  header { padding: 28px 20px 8px; max-width: 900px; margin: auto; }
+  h1 { margin: 0 0 4px; font-size: 1.8rem; }
+  header p { margin: 0; color: var(--muted); }
+
+  main { max-width: 900px; margin: auto; padding: 12px 20px 40px; }
+
+  .concept {
+    background: var(--card);
+    border-left: 6px solid var(--accent);
+    border-radius: 8px;
+    padding: 18px 20px;
+    margin: 18px 0;
+  }
+  .concept h2 { margin: 0 0 10px; font-size: 1.3rem; }
+
+  .theory {
+    background: var(--theory-bg);
+    border-radius: 6px;
+    padding: 12px 16px;
+    margin: 0 0 14px;
+    font-size: 1.02rem;
+  }
+  .theory p { margin: 0 0 8px; }
+  .theory p:last-child { margin-bottom: 0; }
+  .theory .example { color: var(--muted); }
+
+  h3 { margin: 0 0 6px; font-size: 1rem; color: var(--accent); }
+
+  pre {
+    background: var(--code-bg);
+    color: var(--code-ink);
+    padding: 14px;
+    border-radius: 6px;
+    overflow-x: auto;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin: 0 0 12px;
+  }
+  button {
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 6px;
+    font-size: 1rem;
+    cursor: pointer;
+  }
+  button:hover { filter: brightness(1.1); }
+  button:focus-visible { outline: 3px solid #f2b705; outline-offset: 2px; }
+
+  .output {
+    margin-top: 12px;
+    background: #e3f2ec;
+    border-radius: 6px;
+    padding: 12px 14px;
+    white-space: pre-wrap;
+    font-family: Consolas, monospace;
+    display: none;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>OOP in JavaScript 🧱</h1>
+  <p>Read the theory, look at the code, then press the button to see what it does.</p>
+</header>
+
+<main id="list"></main>
+
+<script>
+// Helper: prints text into the output box of each concept
+let currentBox = null;
+function show(text) {
+  currentBox.textContent += text + "\n";
+}
+
+
+// 1. CLASS AND OBJECT
+function classAndObject() {
+  class Car {
+    drive() {
+      return "The car is driving 🚗";
+    }
+  }
+
+  let myCar = new Car();   // create an object
+  show(myCar.drive());
+}
+
+
+// 2. CONSTRUCTOR
+function constructorDemo() {
+  class Student {
+    constructor(name, age) {
+      this.name = name;
+      this.age = age;
+    }
+  }
+
+  let s1 = new Student("Ravi", 20);
+  let s2 = new Student("Priya", 21);
+
+  show("Student 1: " + s1.name + ", age " + s1.age);
+  show("Student 2: " + s2.name + ", age " + s2.age);
+}
+
+
+// 3. ENCAPSULATION
+function encapsulation() {
+  class BankAccount {
+    #balance = 0;   // private variable
+
+    deposit(amount) {
+      this.#balance = this.#balance + amount;
+    }
+
+    getBalance() {
+      return this.#balance;
+    }
+  }
+
+  let acc = new BankAccount();
+  acc.deposit(500);
+
+  show("Balance using method: " + acc.getBalance());
+  show("Direct access acc.balance: " + acc.balance + "  (hidden! ✅)");
+}
+
+
+// 4. INHERITANCE
+function inheritance() {
+  class Animal {               // parent
+    eat() {
+      return "I can eat 🍖";
+    }
+  }
+
+  class Dog extends Animal {   // child
+    bark() {
+      return "I can bark 🐶";
+    }
+  }
+
+  let d = new Dog();
+  show(d.eat());    // from parent
+  show(d.bark());   // Dog's own
+}
+
+
+// 5. POLYMORPHISM
+function polymorphism() {
+  class Animal {
+    speak() {
+      return "Animal makes a sound";
+    }
+  }
+
+  class Cat extends Animal {
+    speak() {
+      return "Cat says Meow 🐱";
+    }
+  }
+
+  class Cow extends Animal {
+    speak() {
+      return "Cow says Moo 🐄";
+    }
+  }
+
+  let animals = [new Animal(), new Cat(), new Cow()];
+
+  for (let a of animals) {
+    show(a.speak());   // same call, different result
+  }
+}
+
+
+// 6. ABSTRACTION
+function abstraction() {
+  class WashingMachine {
+    #fillWater()  { return "Filling water..."; }
+    #spinDrum()   { return "Spinning drum..."; }
+    #drainWater() { return "Draining water..."; }
+
+    start() {
+      show(this.#fillWater());
+      show(this.#spinDrum());
+      show(this.#drainWater());
+      show("Clothes are clean! ✨");
+    }
+  }
+
+  let wm = new WashingMachine();
+  wm.start();   // user only calls start()
+}
+
+
+// PAGE SETUP: theory paragraphs + a card and button for each concept
+const concepts = [
+  {
+    title: "1. Class and Object",
+    theory: [
+      "A <b>class</b> is a blueprint or plan for making things. An <b>object</b> is a real thing made from that blueprint. We use the <b>new</b> keyword to create an object from a class.",
+      "A function written inside a class is called a <b>method</b>. Every object made from the class can use its methods."
+    ],
+    example: "Example: \"Car\" is a class. \"My red car\" is an object made from it.",
+    fn: classAndObject
+  },
+  {
+    title: "2. Constructor",
+    theory: [
+      "A <b>constructor</b> is a special method that runs <b>automatically</b> when we create an object using <b>new</b>. It is used to give starting values to the object.",
+      "Inside the class, <b>this</b> means \"the current object\". So <b>this.name = name</b> saves the name inside that object."
+    ],
+    example: "Example: When a student joins college, their name and age are recorded right at the start.",
+    fn: constructorDemo
+  },
+  {
+    title: "3. Encapsulation",
+    theory: [
+      "<b>Encapsulation</b> means hiding data inside the class and allowing access only through methods. This keeps the data safe from wrong changes.",
+      "In JavaScript, putting <b>#</b> before a variable makes it <b>private</b>. A private variable cannot be used from outside the class."
+    ],
+    example: "Example: An ATM. You can't touch the cash directly, you must use the buttons.",
+    fn: encapsulation
+  },
+  {
+    title: "4. Inheritance",
+    theory: [
+      "<b>Inheritance</b> means a <b>child class</b> gets the properties and methods of a <b>parent class</b>. We use the keyword <b>extends</b> to do this.",
+      "The main benefit is <b>reusability</b>. We don't need to write the same code again in every class."
+    ],
+    example: "Example: A dog is an animal, so Dog gets everything Animal has, plus its own bark().",
+    fn: inheritance
+  },
+  {
+    title: "5. Polymorphism",
+    theory: [
+      "<b>Poly</b> means many and <b>morph</b> means forms. <b>Polymorphism</b> means the same method name can behave differently in different classes.",
+      "When a child class rewrites a method of its parent, it is called <b>method overriding</b>."
+    ],
+    example: "Example: Every animal can speak(), but a cat says Meow and a cow says Moo.",
+    fn: polymorphism
+  },
+  {
+    title: "6. Abstraction",
+    theory: [
+      "<b>Abstraction</b> means showing only <b>what</b> something does and hiding <b>how</b> it does it. The user gets one simple method, and the complicated steps stay hidden inside.",
+      "Here, the inner steps are private methods (starting with <b>#</b>), and the user only calls <b>start()</b>."
+    ],
+    example: "Example: You press \"Start\" on a washing machine without knowing how the motor works.",
+    fn: abstraction
+  }
+];
+
+const list = document.getElementById("list");
+
+concepts.forEach(c => {
+  const card = document.createElement("section");
+  card.className = "concept";
+
+  const paras = c.theory.map(t => `<p>${t}</p>`).join("");
+
+  card.innerHTML = `
+    <h2>${c.title}</h2>
+    <div class="theory">
+      ${paras}
+      <p class="example">💡 ${c.example}</p>
+    </div>
+    <h3>Code</h3>
+    <pre></pre>
+    <button>▶ Run this example</button>
+    <div class="output"></div>
+  `;
+  card.querySelector("pre").textContent = c.fn.toString();
+
+  const out = card.querySelector(".output");
+  card.querySelector("button").addEventListener("click", () => {
+    out.textContent = "";
+    out.style.display = "block";
+    currentBox = out;
+    c.fn();
+  });
+
+  list.appendChild(card);
+});
+</script>
+
+</body>
+</html>

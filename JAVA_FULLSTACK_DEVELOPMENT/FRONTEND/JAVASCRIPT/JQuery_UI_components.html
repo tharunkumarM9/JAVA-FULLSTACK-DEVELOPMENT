@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>jQuery UI Components – Easy Notes</title>
+
+<!-- This one line adds jQuery to the page -->
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+<!-- jQuery UI needs 2 more lines: its JavaScript + its CSS (the look) -->
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+
+<style>
+  :root {
+    --bg: #eef1f7;
+    --card: #ffffff;
+    --ink: #1c2233;
+    --muted: #5a6275;
+    --accent: #0769ad;          /* jQuery blue */
+    --theory-bg: #f3f7fc;
+    --code-bg: #1f2a3c;
+    --code-ink: #e5edf8;
+    --demo-bg: #fffbea;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: "Segoe UI", system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.6;
+  }
+  header { padding: 28px 20px 8px; max-width: 900px; margin: auto; }
+  h1 { margin: 0 0 4px; font-size: 1.8rem; }
+  header p { margin: 0; color: var(--muted); }
+
+  main { max-width: 900px; margin: auto; padding: 12px 20px 40px; }
+
+  .concept {
+    background: var(--card);
+    border-left: 6px solid var(--accent);
+    border-radius: 8px;
+    padding: 18px 20px;
+    margin: 18px 0;
+  }
+  .concept h2 { margin: 0 0 10px; font-size: 1.3rem; }
+
+  .theory {
+    background: var(--theory-bg);
+    border-radius: 6px;
+    padding: 12px 16px;
+    margin: 0 0 14px;
+    font-size: 1.02rem;
+  }
+  .theory p { margin: 0 0 8px; }
+  .theory p:last-child { margin-bottom: 0; }
+  .theory .example { color: var(--muted); }
+  .theory code {
+    background: #e2eaf5;
+    padding: 1px 6px;
+    border-radius: 4px;
+    font-size: 0.95em;
+  }
+
+  h3 { margin: 14px 0 6px; font-size: 1rem; color: var(--accent); }
+
+  pre {
+    background: var(--code-bg);
+    color: var(--code-ink);
+    padding: 14px;
+    border-radius: 6px;
+    overflow-x: auto;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin: 0 0 12px;
+  }
+  .run {
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 6px;
+    font-size: 1rem;
+    cursor: pointer;
+  }
+  .run:hover { filter: brightness(1.1); }
+  button:focus-visible, input:focus-visible { outline: 3px solid #f2b705; outline-offset: 2px; }
+
+  /* The "Try it" area where jQuery does its work */
+  .demo {
+    background: var(--demo-bg);
+    border: 2px dashed #e0c65c;
+    border-radius: 6px;
+    padding: 14px;
+    min-height: 60px;
+  }
+  .demo button {
+    padding: 6px 12px;
+    border-radius: 5px;
+    border: 1px solid #999;
+    background: #fff;
+    cursor: pointer;
+  }
+  .demo input { padding: 6px 8px; border-radius: 5px; border: 1px solid #999; }
+  .box {
+    width: 120px;
+    height: 60px;
+    background: #4a9fd8;
+    color: #fff;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+  }
+  .highlight { background: #ffd54f; color: #000; padding: 2px 6px; border-radius: 4px; }
+  .msg { font-family: Consolas, monospace; color: #1f6f3a; margin-top: 8px; }
+
+  /* extra styles for jQuery UI demos */
+  .drop-zone {
+    width: 200px; height: 110px;
+    border: 3px dashed #888; border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    text-align: center; background: #fff;
+  }
+  .plain-list { list-style: none; padding: 0; margin: 0; max-width: 260px; }
+  .plain-list li {
+    background: #fff; border: 1px solid #bbb; border-radius: 5px;
+    padding: 8px 10px; margin: 5px 0; cursor: pointer;
+  }
+  #selectList .ui-selecting { background: #fff3b0; }
+  #selectList .ui-selected  { background: #4a9fd8; color: #fff; }
+  .ui-widget { font-family: inherit; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>jQuery UI Components 🧩</h1>
+  <p>Read the theory, look at the code, press Run, then play with the component in the yellow "Try it" box.</p>
+</header>
+
+<main id="list"></main>
+
+<script>
+// 1. WHAT IS JQUERY UI
+function introDemo() {
+  // $.ui -> the jQuery UI library
+  // $.ui.version -> tells which version is loaded
+  $("#introMsg").text("jQuery UI is loaded ✅ Version: " + $.ui.version);
+}
+
+
+// 2. DATEPICKER
+function datepickerDemo() {
+  // .datepicker() -> turns a normal input box into a calendar box
+  $("#dateInput").datepicker();
+
+  $("#dateMsg").text("Now click the box to open the calendar 📅");
+}
+
+
+// 3. ACCORDION
+function accordionDemo() {
+  // .accordion() -> turns headings + divs into open/close sections
+  // Only ONE section stays open at a time
+  $("#myAccordion").accordion();
+}
+
+
+// 4. TABS
+function tabsDemo() {
+  // .tabs() -> turns a list of links + divs into clickable tabs
+  // Each link (#tab1) opens the div with that id
+  $("#myTabs").tabs();
+}
+
+
+// 5. DIALOG
+function dialogDemo() {
+  // .dialog({ ... }) -> turns a div into a popup box
+  // { } holds OPTIONS (settings)
+  // modal: true -> dark background, user must close the popup first
+  $("#myDialog").dialog({
+    title: "Hello!",
+    modal: True
+  });
+
+  // .dialog("open") -> open the popup (needed when Run is pressed again)
+  $("#myDialog").dialog("open");
+}
+
+
+// 6. AUTOCOMPLETE
+function autocompleteDemo() {
+  // [ ] -> an array (a list of values)
+  let languages = ["C", "C++", "Java", "JavaScript", "Python", "PHP", "Ruby"];
+
+  // .autocomplete({ source: list }) -> shows suggestions while typing
+  $("#langInput").autocomplete({
+    source: languages
+  });
+
+  $("#autoMsg").text("Now type a letter like J or P ⌨️");
+}
+
+
+// 7. SLIDER
+function sliderDemo() {
+  // .slider({ ... }) -> turns a div into a drag slider
+  $("#mySlider").slider({
+    min: 0,          // smallest value
+    max: 100,        // biggest value
+    value: 50,       // starting value
+
+    // slide: -> runs every time the slider moves
+    // ui.value -> the current number on the slider
+    slide: function (event, ui) {
+      $("#sliderMsg").text("Volume: " + ui.value);
+    }
+  });
+
+  $("#sliderMsg").text("Now drag the slider 🎚️");
+}
+
+
+// 8. PROGRESSBAR
+function startProgress() {
+  // .progressbar({ value: 0 }) -> shows a loading bar at 0%
+  $("#myBar").progressbar({ value: 0 });
+  $("#barMsg").text("0%");
+}
+
+function addProgress() {
+  // .progressbar("value") -> GET the current value
+  let now = $("#myBar").progressbar("value");
+
+  // .progressbar("value", number) -> SET a new value
+  $("#myBar").progressbar("value", now + 10);
+  $("#barMsg").text((now + 10) + "%");
+}
+
+
+// 9. SPINNER
+function spinnerDemo() {
+  // .spinner() -> adds up ▲ and down ▼ arrows to a number box
+  $("#qtyInput").spinner({
+    min: 1,   // cannot go below 1
+    max: 10   // cannot go above 10
+  });
+}
+
+
+// 10. TOOLTIP
+function tooltipDemo() {
+  // .tooltip() -> shows a small hint box when the mouse is on an element
+  // The hint text comes from the "title" attribute in the HTML
+  $("#tipArea").tooltip();
+
+  $("#tipMsg").text("Now move your mouse on the words above 💬");
+}
+
+
+// 11. DRAGGABLE
+function draggableDemo() {
+  // .draggable() -> lets you pick the element with the mouse and move it
+  $("#dragBox").draggable();
+  $("#dragBox").text("Drag me!");
+}
+
+
+// 12. DROPPABLE
+function droppableDemo() {
+  // First make the small box draggable
+  $("#dropItem").draggable();
+
+  // .droppable({ ... }) -> makes an area that ACCEPTS dropped items
+  $("#dropZone").droppable({
+    // drop: -> runs when an item is dropped inside
+    drop: function () {
+      $("#dropZone").css("background", "#b9f6ca").text("Dropped! ✅");
+    }
+  });
+}
+
+
+// 13. RESIZABLE
+function resizableDemo() {
+  // .resizable() -> adds a corner handle to change the size
+  $("#sizeBox").resizable();
+  $("#sizeBox").text("Pull my corner ↘");
+}
+
+
+// 14. SORTABLE
+function sortableDemo() {
+  // .sortable() -> lets you drag list items up and down
+  // to change their ORDER
+  $("#sortList").sortable();
+  $("#sortMsg").text("Now drag the items to change the order ↕️");
+}
+
+
+// 15. SELECTABLE
+function selectableDemo() {
+  // .selectable() -> click (or drag over) items to select them
+  // Hold Ctrl to select more than one
+  $("#selectList").selectable();
+  $("#selectMsg").text("Now click items. Hold Ctrl for many 🖱️");
+}
+
+
+// ----------------------------------------------------------
+// PAGE SETUP (you don't need to study this part)
+// ----------------------------------------------------------
+const concepts = [
+  {
+    title: "1. What is jQuery UI?",
+    theory: [
+      "<b>jQuery UI</b> is an <b>add-on</b> for jQuery.",
+      "It gives <b>ready-made parts</b> for a website, like calendars, popups and tabs.",
+      "You add <b>2 extra lines</b> in HTML: jQuery UI's <b>JS file</b> and its <b>CSS file</b>.",
+      "Rule: <code>$(\"#id\").componentName()</code> → turns a normal element into a UI component."
+    ],
+    example: "Like buying ready-made furniture instead of building it from wood.",
+    demo: `<p id="introMsg" class="msg">Press Run.</p>`,
+    fns: [introDemo]
+  },
+  {
+    title: "2. Datepicker",
+    theory: [
+      "<code>datepicker()</code> → shows a <b>calendar</b> to pick a date.",
+      "The user clicks a date instead of typing it."
+    ],
+    example: "Choosing your date of birth on a form.",
+    demo: `<input id="dateInput" placeholder="Pick a date">
+           <p id="dateMsg" class="msg">Press Run first.</p>`,
+    fns: [datepickerDemo]
+  },
+  {
+    title: "3. Accordion",
+    theory: [
+      "<code>accordion()</code> → sections that <b>open and close</b> on click.",
+      "Only <b>one section</b> is open at a time."
+    ],
+    example: "An FAQ page: click a question to see its answer.",
+    demo: `<div id="myAccordion">
+             <h3>What is HTML?</h3>
+             <div><p>HTML builds the structure of a page.</p></div>
+             <h3>What is CSS?</h3>
+             <div><p>CSS makes the page look good.</p></div>
+             <h3>What is JavaScript?</h3>
+             <div><p>JavaScript makes the page interactive.</p></div>
+           </div>`,
+    fns: [accordionDemo]
+  },
+  {
+    title: "4. Tabs",
+    theory: [
+      "<code>tabs()</code> → shows content in <b>tabs</b>.",
+      "Click a tab to see <b>only its content</b>."
+    ],
+    example: "Tabs in your web browser.",
+    demo: `<div id="myTabs">
+             <ul>
+               <li><a href="#tab1">Home</a></li>
+               <li><a href="#tab2">About</a></li>
+               <li><a href="#tab3">Contact</a></li>
+             </ul>
+             <div id="tab1">Welcome to the home page 🏠</div>
+             <div id="tab2">We are students learning jQuery 📚</div>
+             <div id="tab3">Email: student@college.com 📧</div>
+           </div>`,
+    fns: [tabsDemo]
+  },
+  {
+    title: "5. Dialog",
+    theory: [
+      "<code>dialog()</code> → shows a <b>popup box</b> on the page.",
+      "It can be <b>moved</b>, <b>resized</b> and <b>closed</b>."
+    ],
+    example: "\"Are you sure you want to delete?\" popup.",
+    demo: `<div id="myDialog" style="display:none">This is a jQuery UI popup box! 🎉</div>
+           <p class="msg">Press Run to open the popup.</p>`,
+    fns: [dialogDemo]
+  },
+  {
+    title: "6. Autocomplete",
+    theory: [
+      "<code>autocomplete()</code> → shows <b>suggestions</b> while you type.",
+      "The suggestions come from a <b>list</b> we give it."
+    ],
+    example: "Google search suggestions.",
+    demo: `<input id="langInput" placeholder="Type a language">
+           <p id="autoMsg" class="msg">Press Run first.</p>`,
+    fns: [autocompleteDemo]
+  },
+  {
+    title: "7. Slider",
+    theory: [
+      "<code>slider()</code> → a bar you <b>drag</b> to pick a number.",
+      "We set the <b>min</b>, <b>max</b> and <b>starting value</b>."
+    ],
+    example: "Volume or brightness control on your phone.",
+    demo: `<div id="mySlider" style="max-width:300px; margin:10px 0"></div>
+           <p id="sliderMsg" class="msg">Press Run first.</p>`,
+    fns: [sliderDemo]
+  },
+  {
+    title: "8. Progressbar",
+    theory: [
+      "<code>progressbar()</code> → shows <b>how much work is done</b>.",
+      "Value goes from <b>0 to 100</b> (percent)."
+    ],
+    example: "Download or file upload bar.",
+    demo: `<div id="myBar" style="max-width:300px"></div>
+           <p id="barMsg" class="msg">Press Start first.</p>`,
+    fns: [startProgress, addProgress],
+    labels: ["▶ Start progressbar", "▶ Add 10%"]
+  },
+  {
+    title: "9. Spinner",
+    theory: [
+      "<code>spinner()</code> → a number box with <b>up ▲ and down ▼ arrows</b>.",
+      "We can set <b>min</b> and <b>max</b> limits."
+    ],
+    example: "Choosing quantity in a shopping cart.",
+    demo: `<label>Quantity: <input id="qtyInput" value="1" style="width:60px"></label>`,
+    fns: [spinnerDemo]
+  },
+  {
+    title: "10. Tooltip",
+    theory: [
+      "<code>tooltip()</code> → shows a <b>small hint</b> when the mouse is on something.",
+      "The hint text comes from the <code>title</code> attribute."
+    ],
+    example: "Hovering on an icon and seeing its name.",
+    demo: `<p id="tipArea">
+             Hover on <span title="HyperText Markup Language" style="border-bottom:1px dashed">HTML</span>
+             or <span title="Cascading Style Sheets" style="border-bottom:1px dashed">CSS</span>
+           </p>
+           <p id="tipMsg" class="msg">Press Run first.</p>`,
+    fns: [tooltipDemo]
+  },
+  {
+    title: "11. Draggable",
+    theory: [
+      "<code>draggable()</code> → you can <b>pick and move</b> the element with the mouse."
+    ],
+    example: "Moving app icons on your phone screen.",
+    demo: `<div id="dragBox" class="box" style="cursor:move">Press Run</div>`,
+    fns: [draggableDemo]
+  },
+  {
+    title: "12. Droppable",
+    theory: [
+      "<code>droppable()</code> → an area where you can <b>drop</b> a dragged item.",
+      "We can run code <b>when the drop happens</b>."
+    ],
+    example: "Dragging a file into the Recycle Bin.",
+    demo: `<div style="display:flex; gap:30px; flex-wrap:wrap; align-items:center">
+             <div id="dropItem" class="box" style="cursor:move">Drag me</div>
+             <div id="dropZone" class="drop-zone">Drop here</div>
+           </div>`,
+    fns: [droppableDemo]
+  },
+  {
+    title: "13. Resizable",
+    theory: [
+      "<code>resizable()</code> → you can <b>change the size</b> by pulling the corner."
+    ],
+    example: "Making a window bigger or smaller on your computer.",
+    demo: `<div id="sizeBox" class="box" style="width:160px; height:80px">Press Run</div>`,
+    fns: [resizableDemo]
+  },
+  {
+    title: "14. Sortable",
+    theory: [
+      "<code>sortable()</code> → drag list items to <b>change their order</b>."
+    ],
+    example: "Rearranging songs in a playlist.",
+    demo: `<ul id="sortList" class="plain-list">
+             <li>1. Wake up</li>
+             <li>2. Brush teeth</li>
+             <li>3. Eat breakfast</li>
+             <li>4. Go to college</li>
+           </ul>
+           <p id="sortMsg" class="msg">Press Run first.</p>`,
+    fns: [sortableDemo]
+  },
+  {
+    title: "15. Selectable",
+    theory: [
+      "<code>selectable()</code> → <b>click to select</b> items from a list.",
+      "Hold <b>Ctrl</b> to select <b>many</b>."
+    ],
+    example: "Selecting many photos in your gallery.",
+    demo: `<ul id="selectList" class="plain-list">
+             <li>Pizza 🍕</li>
+             <li>Burger 🍔</li>
+             <li>Dosa 🥞</li>
+             <li>Biryani 🍛</li>
+           </ul>
+           <p id="selectMsg" class="msg">Press Run first.</p>`,
+    fns: [selectableDemo]
+  }
+];
+
+const list = document.getElementById("list");
+
+concepts.forEach(c => {
+  const card = document.createElement("section");
+  card.className = "concept";
+
+  const paras = c.theory.map(t => `<p>${t}</p>`).join("");
+  const code = c.fns.map(f => f.toString()).join("\n\n");
+
+  card.innerHTML = `
+    <h2>${c.title}</h2>
+    <div class="theory">
+      ${paras}
+      <p class="example">💡 ${c.example}</p>
+    </div>
+    <h3>Code</h3>
+    <pre></pre>
+    <div class="buttons" style="display:flex; gap:10px; flex-wrap:wrap"></div>
+    <h3>Try it 👇</h3>
+    <div class="demo">${c.demo}</div>
+  `;
+  card.querySelector("pre").textContent = code;
+
+  const btnArea = card.querySelector(".buttons");
+  c.fns.forEach((f, i) => {
+    const btn = document.createElement("button");
+    btn.className = "run";
+    btn.textContent = c.labels ? c.labels[i] : "▶ Run this example";
+    btn.addEventListener("click", f);
+    btnArea.appendChild(btn);
+  });
+
+  list.appendChild(card);
+});
+</script>
+
+</body>
+</html>

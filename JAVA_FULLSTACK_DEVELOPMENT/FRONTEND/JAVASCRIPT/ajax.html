@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AJAX – Data Exchange with Server – Easy Notes</title>
+
+<!-- This one line adds jQuery to the page -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<!-- Backup: if the first link fails, load jQuery from a second place -->
+<script>window.jQuery || document.write('<script src="https://code.jquery.com/jquery-3.7.1.min.js"><\/script>')</script>
+
+<style>
+  :root {
+    --bg: #eef1f7;
+    --card: #ffffff;
+    --ink: #1c2233;
+    --muted: #5a6275;
+    --accent: #0769ad;          /* jQuery blue */
+    --theory-bg: #f3f7fc;
+    --code-bg: #1f2a3c;
+    --code-ink: #e5edf8;
+    --demo-bg: #fffbea;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: "Segoe UI", system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.6;
+  }
+  header { padding: 28px 20px 8px; max-width: 900px; margin: auto; }
+  h1 { margin: 0 0 4px; font-size: 1.8rem; }
+  header p { margin: 0; color: var(--muted); }
+
+  main { max-width: 900px; margin: auto; padding: 12px 20px 40px; }
+
+  .concept {
+    background: var(--card);
+    border-left: 6px solid var(--accent);
+    border-radius: 8px;
+    padding: 18px 20px;
+    margin: 18px 0;
+  }
+  .concept h2 { margin: 0 0 10px; font-size: 1.3rem; }
+
+  .theory {
+    background: var(--theory-bg);
+    border-radius: 6px;
+    padding: 12px 16px;
+    margin: 0 0 14px;
+    font-size: 1.02rem;
+  }
+  .theory p { margin: 0 0 8px; }
+  .theory p:last-child { margin-bottom: 0; }
+  .theory .example { color: var(--muted); }
+  .theory code {
+    background: #e2eaf5;
+    padding: 1px 6px;
+    border-radius: 4px;
+    font-size: 0.95em;
+  }
+
+  h3 { margin: 14px 0 6px; font-size: 1rem; color: var(--accent); }
+
+  pre {
+    background: var(--code-bg);
+    color: var(--code-ink);
+    padding: 14px;
+    border-radius: 6px;
+    overflow-x: auto;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin: 0 0 12px;
+  }
+  .run {
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 6px;
+    font-size: 1rem;
+    cursor: pointer;
+  }
+  .run:hover { filter: brightness(1.1); }
+  button:focus-visible, input:focus-visible { outline: 3px solid #f2b705; outline-offset: 2px; }
+
+  /* The "Try it" area where jQuery does its work */
+  .demo {
+    background: var(--demo-bg);
+    border: 2px dashed #e0c65c;
+    border-radius: 6px;
+    padding: 14px;
+    min-height: 60px;
+  }
+  .demo button {
+    padding: 6px 12px;
+    border-radius: 5px;
+    border: 1px solid #999;
+    background: #fff;
+    cursor: pointer;
+  }
+  .demo input { padding: 6px 8px; border-radius: 5px; border: 1px solid #999; }
+  .box {
+    width: 120px;
+    height: 60px;
+    background: #4a9fd8;
+    color: #fff;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+  }
+  .highlight { background: #ffd54f; color: #000; padding: 2px 6px; border-radius: 4px; }
+  .msg { font-family: Consolas, monospace; color: #1f6f3a; margin-top: 8px; }
+
+  .msg { white-space: pre-wrap; }
+  .flow { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+  .step {
+    background: #fff; border: 2px solid var(--accent); border-radius: 6px;
+    padding: 8px 12px; font-weight: 600; text-align: center;
+  }
+  .arrow { font-size: 1.4rem; color: var(--accent); }
+  .user-list { margin: 8px 0 0; padding-left: 20px; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>AJAX: Data Exchange with Server 🌐</h1>
+  <p>Read the theory, look at the code, press Run, and see real data come from a server into the yellow box.</p>
+</header>
+
+<main>
+  <div id="status" class="concept" style="border-left-color:#e0a800">
+    <h2 style="margin-bottom:6px">🔎 Setup check</h2>
+    <p id="jqStatus">Checking jQuery...</p>
+    <p id="serverStatus">Checking server...</p>
+    <p id="statusHelp" style="color:#a33; display:none"></p>
+  </div>
+  <div id="list"></div>
+</main>
+
+<script>
+// All examples get data from this FREE test server.
+// It gives fake data (users, posts) for practice.
+// const -> a variable whose value never changes
+const SERVER = "https://jsonplaceholder.typicode.com";
+
+
+// 2. JSON
+function jsonDemo() {
+  // A JavaScript object: data inside { } as  key: value
+  let student = { name: "Ravi", age: 20 };
+
+  // JSON.stringify() -> object  ➜  JSON text (to SEND to server)
+  let text = JSON.stringify(student);
+
+  // JSON.parse() -> JSON text  ➜  object (to USE data from server)
+  let obj = JSON.parse(text);
+
+  $("#jsonMsg").text(
+    "As JSON text: " + text + "\n" +
+    "Back to object, name = " + obj.name
+  );
+}
+
+
+// 3. XMLHttpRequest (old plain JavaScript way)
+function xhrDemo() {
+  // new XMLHttpRequest() -> create a request object
+  let xhr = new XMLHttpRequest();
+
+  // .open("GET", url) -> say WHAT we want and FROM WHERE
+  xhr.open("GET", SERVER + "/users/1");
+
+  // .onload -> runs when the server's reply arrives
+  xhr.onload = function () {
+    // xhr.responseText -> the reply as text, JSON.parse turns it into an object
+    let user = JSON.parse(xhr.responseText);
+    document.getElementById("xhrMsg").textContent = "Name: " + user.name;
+  };
+
+  // .send() -> actually send the request
+  xhr.send();
+
+  document.getElementById("xhrMsg").textContent = "Request sent... waiting ⏳";
+}
+
+
+// 4. fetch() (modern plain JavaScript way)
+function fetchDemo() {
+  // fetch(url) -> send a GET request
+  fetch(SERVER + "/users/2")
+    // .then() -> runs AFTER the previous step finishes
+    // response.json() -> convert reply into an object
+    .then(function (response) {
+      return response.json();
+    })
+    .then(function (user) {
+      $("#fetchMsg").text("Name: " + user.name + "\nEmail: " + user.email);
+    });
+
+  $("#fetchMsg").text("Request sent... waiting ⏳");
+}
+
+
+// 5. $.ajax()
+function ajaxDemo() {
+  // $.ajax({ ... }) -> jQuery's full AJAX method
+  // We give all settings inside { }
+  $.ajax({
+    url: SERVER + "/users/3",   // where to send the request
+    type: "GET",                // GET = get data from server
+
+    // success: -> runs when data comes back OK
+    // "data" = what the server sent (already an object)
+    success: function (data) {
+      $("#ajaxMsg").text("Name: " + data.name + "\nCity: " + data.address.city);
+    }
+  });
+}
+
+
+// 6. $.get()
+function getDemo() {
+  $("#getMsg").text("Loading... ⏳");   // show something right away
+
+  // $.get(url, function) -> short way to GET data
+  $.get(SERVER + "/posts/1", function (data) {
+    $("#getMsg").text("Post title:\n" + data.title);
+  })
+  // .fail(function) -> runs if the request does NOT work
+  // xhr.status -> error code (0 = no connection / blocked)
+  .fail(function (xhr) {
+    $("#getMsg").text("❌ Could not get data. Error code: " + xhr.status);
+  });
+}
+
+
+// 7. $.getJSON()
+function getJSONDemo() {
+  $("#getJSONMsg").text("Loading... ⏳");
+
+  // $.getJSON(url, function) -> GET data that is in JSON format
+  $.getJSON(SERVER + "/todos/1", function (data) {
+    // data.completed is true or false
+    $("#getJSONMsg").text("Task: " + data.title + "\nDone? " + data.completed);
+  })
+  .fail(function (xhr) {
+    $("#getJSONMsg").text("❌ Could not get data. Error code: " + xhr.status);
+  });
+}
+
+
+// 8. $.post()
+function postDemo() {
+  $("#postMsg").text("Sending... ⏳");
+
+  // The data we want to SEND to the server
+  let newPost = {
+    title: $("#postTitle").val(),   // take text from input box
+    body: "Sent from jQuery",
+    userId: 1
+  };
+
+  // $.post(url, data, function) -> SEND data to the server
+  $.post(SERVER + "/posts", newPost, function (reply) {
+    // The server replies with what it saved + a new id
+    $("#postMsg").text("Saved on server ✅\nNew id: " + reply.id + "\nTitle: " + reply.title);
+  })
+  .fail(function (xhr) {
+    $("#postMsg").text("❌ Could not send data. Error code: " + xhr.status);
+  });
+}
+
+
+// 9. load()
+function loadDemo() {
+  $("#loadArea").text("Loading... ⏳");
+
+  // .load(url, function) -> gets data and puts it straight
+  // INSIDE the element. The function runs when it finishes.
+  // status -> "success" or "error"
+  $("#loadArea").load(SERVER + "/posts/2", function (response, status, xhr) {
+    if (status == "error") {
+      $("#loadArea").text("❌ Could not load. Error code: " + xhr.status);
+    }
+  });
+}
+
+
+// 10. SHOW MANY RECORDS
+function manyRecordsDemo() {
+  $("#userList").html("<li>Loading... ⏳</li>");
+
+  $.getJSON(SERVER + "/users", function (users) {
+    // users is an ARRAY (a list) of 10 user objects
+
+    $("#userList").empty();   // .empty() -> clear old items
+
+    // $.each(list, function(index, item)) -> loop over every item
+    $.each(users, function (i, user) {
+      $("#userList").append("<li>" + user.name + " — " + user.email + "</li>");
+    });
+  })
+  .fail(function (xhr) {
+    $("#userList").html("<li>❌ Could not get users. Error code: " + xhr.status + "</li>");
+  });
+}
+
+
+// 11. ERROR HANDLING
+function errorDemo() {
+  $.ajax({
+    url: SERVER + "/wrong-address",   // this address does NOT exist
+
+    success: function () {
+      $("#errorMsg").text("Worked!");
+    },
+
+    // error: -> runs when the request FAILS
+    // xhr.status -> error number from the server (404 = not found)
+    error: function (xhr) {
+      $("#errorMsg").text("❌ Something went wrong!\nError code: " + xhr.status);
+    }
+  });
+}
+
+
+// 12. LOADING MESSAGE
+function loadingDemo() {
+  $.ajax({
+    url: SERVER + "/photos/1",
+
+    // beforeSend: -> runs BEFORE the request is sent
+    beforeSend: function () {
+      $("#loadingMsg").text("Loading... ⏳");
+    },
+
+    success: function (data) {
+      $("#loadingMsg").text("Photo title: " + data.title);
+    },
+
+    // complete: -> runs at the END (success OR error)
+    complete: function () {
+      $("#loadingDone").text("Request finished ✅");
+    }
+  });
+}
+
+
+// ----------------------------------------------------------
+// PAGE SETUP (you don't need to study this part)
+// ----------------------------------------------------------
+const concepts = [
+  {
+    title: "1. What is AJAX?",
+    theory: [
+      "<b>AJAX</b> = <b>A</b>synchronous <b>J</b>avaScript <b>A</b>nd <b>X</b>ML.",
+      "It lets a web page <b>talk to the server</b> in the background.",
+      "The page gets new data <b>without reloading</b>.",
+      "<b>Asynchronous</b> = the page does not wait. You can keep using it while data comes.",
+      "Today we mostly use <b>JSON</b> instead of XML."
+    ],
+    example: "Instagram loads more posts as you scroll. The page never reloads.",
+    demo: `<div class="flow">
+             <div class="step">1. You click</div><span class="arrow">➜</span>
+             <div class="step">2. Request<br>to server</div><span class="arrow">➜</span>
+             <div class="step">3. Server<br>sends data</div><span class="arrow">➜</span>
+             <div class="step">4. Page updates<br>(no reload)</div>
+           </div>`,
+    fns: []
+  },
+  {
+    title: "2. JSON — the data format",
+    theory: [
+      "<b>JSON</b> is the most common way to <b>send data</b> between page and server.",
+      "It looks like: <code>{\"name\": \"Ravi\", \"age\": 20}</code>",
+      "<code>JSON.stringify()</code> → object to text (for <b>sending</b>).",
+      "<code>JSON.parse()</code> → text to object (for <b>using</b>)."
+    ],
+    example: "Like packing things in a box to courier them, then unpacking at the other end.",
+    demo: `<p id="jsonMsg" class="msg">Press Run.</p>`,
+    fns: [jsonDemo]
+  },
+  {
+    title: "3. XMLHttpRequest — the old way",
+    theory: [
+      "<code>XMLHttpRequest</code> is the <b>original</b> way to do AJAX in plain JavaScript.",
+      "Steps: <b>create</b> → <b>open</b> → <b>onload</b> → <b>send</b>.",
+      "Good to know for exams. Longer to write."
+    ],
+    example: "Like writing a letter by hand and posting it yourself.",
+    demo: `<p id="xhrMsg" class="msg">Press Run.</p>`,
+    fns: [xhrDemo]
+  },
+  {
+    title: "4. fetch() — the modern way",
+    theory: [
+      "<code>fetch()</code> is the <b>new, shorter</b> way in plain JavaScript.",
+      "<code>.then()</code> means: <b>after this finishes, do this next</b>."
+    ],
+    example: "Like ordering food online: order → wait → food arrives → eat.",
+    demo: `<p id="fetchMsg" class="msg">Press Run.</p>`,
+    fns: [fetchDemo]
+  },
+  {
+    title: "5. $.ajax() — jQuery full method",
+    theory: [
+      "<code>$.ajax()</code> is jQuery's <b>main</b> AJAX method.",
+      "We give settings like <b>url</b>, <b>type</b> and <b>success</b>.",
+      "It can do <b>everything</b>: get, send, show errors."
+    ],
+    example: "A full order form where you choose every detail.",
+    demo: `<p id="ajaxMsg" class="msg">Press Run.</p>`,
+    fns: [ajaxDemo]
+  },
+  {
+    title: "6. $.get() — get data",
+    theory: [
+      "<code>$.get()</code> → a <b>short way</b> to <b>get</b> data from the server.",
+      "Just give the <b>url</b> and a <b>function</b>."
+    ],
+    example: "Asking the library: \"Give me book number 1.\"",
+    demo: `<p id="getMsg" class="msg">Press Run.</p>`,
+    fns: [getDemo]
+  },
+  {
+    title: "7. $.getJSON() — get JSON data",
+    theory: [
+      "<code>$.getJSON()</code> → same as $.get(), but made <b>only for JSON</b> data."
+    ],
+    example: "Same library request, but you say \"only give me it in English\".",
+    demo: `<p id="getJSONMsg" class="msg">Press Run.</p>`,
+    fns: [getJSONDemo]
+  },
+  {
+    title: "8. $.post() — send data",
+    theory: [
+      "<code>$.post()</code> → <b>sends</b> data to the server.",
+      "<b>GET</b> = take data. <b>POST</b> = give data.",
+      "Used for <b>forms</b>, like signup or comments."
+    ],
+    example: "Submitting your exam form to the college office.",
+    demo: `<input id="postTitle" value="My first post" placeholder="Post title">
+           <p id="postMsg" class="msg">Type a title, then press Run.</p>`,
+    fns: [postDemo]
+  },
+  {
+    title: "9. load() — put data straight into the page",
+    theory: [
+      "<code>load()</code> → gets data and puts it <b>directly inside</b> an element.",
+      "The <b>shortest</b> AJAX method. Best for loading <b>HTML parts</b>."
+    ],
+    example: "Like pasting a page from another notebook directly into yours.",
+    demo: `<div id="loadArea" class="msg">Press Run. Data will appear here.</div>`,
+    fns: [loadDemo]
+  },
+  {
+    title: "10. Showing many records",
+    theory: [
+      "Servers often send a <b>list</b> (array) of items.",
+      "<code>$.each()</code> → goes through <b>each item</b> one by one.",
+      "We <b>append</b> each item to the page."
+    ],
+    example: "Showing all students' names from the college database.",
+    demo: `<ul id="userList" class="user-list"><li>Press Run.</li></ul>`,
+    fns: [manyRecordsDemo]
+  },
+  {
+    title: "11. Error handling",
+    theory: [
+      "Sometimes the request <b>fails</b> (wrong address, no internet, server down).",
+      "<code>error:</code> → runs when it fails, so we can <b>show a message</b>.",
+      "<b>404</b> = not found. <b>500</b> = server problem."
+    ],
+    example: "Calling a wrong number and hearing \"This number does not exist\".",
+    demo: `<p id="errorMsg" class="msg">Press Run.</p>`,
+    fns: [errorDemo]
+  },
+  {
+    title: "12. Loading message",
+    theory: [
+      "<code>beforeSend:</code> → runs <b>before</b> the request (show \"Loading...\").",
+      "<code>complete:</code> → runs at the <b>end</b>, whether it worked or failed."
+    ],
+    example: "The spinning circle you see before a video starts.",
+    demo: `<p id="loadingMsg" class="msg">Press Run.</p>
+           <p id="loadingDone" class="msg"></p>`,
+    fns: [loadingDemo]
+  }
+];
+
+const list = document.getElementById("list");
+
+concepts.forEach(c => {
+  const card = document.createElement("section");
+  card.className = "concept";
+
+  const paras = c.theory.map(t => `<p>${t}</p>`).join("");
+  const hasCode = c.fns.length > 0;
+
+  card.innerHTML = `
+    <h2>${c.title}</h2>
+    <div class="theory">
+      ${paras}
+      <p class="example">💡 ${c.example}</p>
+    </div>
+    ${hasCode ? `<h3>Code</h3><pre></pre>
+      <div class="buttons" style="display:flex; gap:10px; flex-wrap:wrap"></div>` : ""}
+    <h3>${hasCode ? "Try it 👇" : "How it works 👇"}</h3>
+    <div class="demo">${c.demo}</div>
+  `;
+
+  if (hasCode) {
+    card.querySelector("pre").textContent = c.fns.map(f => f.toString()).join("\n\n");
+    const btnArea = card.querySelector(".buttons");
+    c.fns.forEach((f, i) => {
+      const btn = document.createElement("button");
+      btn.className = "run";
+      btn.textContent = c.labels ? c.labels[i] : "▶ Run this example";
+      btn.addEventListener("click", f);
+      btnArea.appendChild(btn);
+    });
+  }
+
+  list.appendChild(card);
+});
+
+// SETUP CHECK + BACKUP PRACTICE SERVER (you don't need to study this part)
+// If the real test server is blocked, a built-in fake server answers instead,
+// so every example still works the same way.
+(function () {
+  const jq = document.getElementById("jqStatus");
+  const sv = document.getElementById("serverStatus");
+  const help = document.getElementById("statusHelp");
+
+  if (window.jQuery) {
+    jq.textContent = "✅ jQuery loaded (version " + jQuery.fn.jquery + ")";
+  } else {
+    jq.textContent = "❌ jQuery did NOT load. Check your internet and reload the page.";
+  }
+
+  // ---------- fake data ----------
+  const names = ["Ravi Kumar","Priya Sharma","Arjun Reddy","Sneha Rao","Kiran Naidu",
+                 "Divya Menon","Rahul Verma","Anjali Gupta","Vikram Singh","Meera Iyer"];
+  const cities = ["Tirupati","Kadapa","Hyderabad","Bengaluru","Chennai",
+                  "Vijayawada","Pune","Delhi","Mumbai","Kochi"];
+  const users = names.map((n, k) => ({
+    id: k + 1, name: n,
+    email: n.split(" ")[0].toLowerCase() + "@example.com",
+    address: { city: cities[k] }
+  }));
+  const posts = {
+    1: { id: 1, userId: 1, title: "Learning AJAX is fun", body: "AJAX loads data without reloading." },
+    2: { id: 2, userId: 1, title: "jQuery makes AJAX easy", body: "Use $.get, $.post and $.ajax." }
+  };
+  const todos = { 1: { id: 1, title: "Finish jQuery notes", completed: false } };
+  const photos = { 1: { id: 1, title: "A beautiful sunrise over the hills" } };
+
+  function answer(method, url, body) {
+    const path = url.replace(SERVER, "").split("?")[0];
+    const p = path.split("/").filter(Boolean);   // e.g. ["users","3"]
+    const one = (table) => table[p[1]] ? [200, table[p[1]]] : [404, {}];
+    if (method === "POST" && path === "/posts") {
+      let data = {};
+      try { data = JSON.parse(body); }
+      catch (e) { data = Object.fromEntries(new URLSearchParams(body || "")); }
+      return [201, Object.assign({}, data, { id: 101 })];
+    }
+    if (p[0] === "users" && p.length === 1) return [200, users];
+    if (p[0] === "users") return users[p[1] - 1] ? [200, users[p[1] - 1]] : [404, {}];
+    if (p[0] === "posts" && p[1]) return one(posts);
+    if (p[0] === "todos" && p[1]) return one(todos);
+    if (p[0] === "photos" && p[1]) return one(photos);
+    return [404, {}];
+  }
+
+  let offline = false;
+  const RealXHR = window.XMLHttpRequest;
+  const realFetch = window.fetch ? window.fetch.bind(window) : null;
+
+  // Fake XMLHttpRequest (also used by jQuery internally)
+  function FakeXHR() {
+    this.readyState = 0; this.status = 0; this.statusText = "";
+    this.responseText = ""; this.response = ""; this.responseType = "";
+    this._headers = {};
+  }
+  FakeXHR.prototype.open = function (m, u) { this._m = (m || "GET").toUpperCase(); this._u = u; this.readyState = 1; };
+  FakeXHR.prototype.setRequestHeader = function () {};
+  FakeXHR.prototype.overrideMimeType = function () {};
+  FakeXHR.prototype.getAllResponseHeaders = function () { return "content-type: application/json; charset=utf-8\r\n"; };
+  FakeXHR.prototype.getResponseHeader = function (h) { return h.toLowerCase() === "content-type" ? "application/json; charset=utf-8" : null; };
+  FakeXHR.prototype.abort = function () {};
+  FakeXHR.prototype.addEventListener = function (t, fn) { this["on" + t] = fn; };
+  FakeXHR.prototype.send = function (body) {
+    const self = this;
+    setTimeout(function () {
+      const r = answer(self._m, self._u, body);
+      self.status = r[0]; self.statusText = r[0] === 404 ? "Not Found" : "OK";
+      self.responseText = self.response = JSON.stringify(r[1]);
+      self.readyState = 4;
+      if (self.onreadystatechange) self.onreadystatechange();
+      if (self.onload) self.onload();
+    }, 500);
+  };
+
+  // Use the fake only for the practice server, only when offline
+  window.XMLHttpRequest = function () {
+    const real = new RealXHR();
+    const realOpen = real.open;
+    let fake = null;
+    return new Proxy(real, {
+      get(t, k) {
+        if (k === "open") return function (m, u) {
+          if (offline && String(u).indexOf(SERVER) === 0) { fake = new FakeXHR(); return fake.open(m, u); }
+          return realOpen.apply(t, arguments);
+        };
+        const target = fake || t;
+        const v = target[k];
+        return typeof v === "function" ? v.bind(target) : v;
+      },
+      set(t, k, v) { (fake || t)[k] = v; if (!fake) t[k] = v; return true; }
+    });
+  };
+
+  if (realFetch) {
+    window.fetch = function (url, opts) {
+      if (offline && String(url).indexOf(SERVER) === 0) {
+        const r = answer(((opts && opts.method) || "GET").toUpperCase(), String(url), opts && opts.body);
+        return new Promise(res => setTimeout(() =>
+          res(new Response(JSON.stringify(r[1]), { status: r[0], headers: { "Content-Type": "application/json" } })), 500));
+      }
+      return realFetch(url, opts);
+    };
+  }
+
+  // Check the real server
+  const check = realFetch ? realFetch(SERVER + "/users/1") : Promise.reject();
+  check
+    .then(r => { if (!r.ok) throw new Error(r.status); sv.textContent = "✅ Real test server is working"; })
+    .catch(() => {
+      offline = true;
+      sv.textContent = "⚠️ Real test server is blocked on your network";
+      help.style.color = "#1f6f3a";
+      help.style.display = "block";
+      help.innerHTML = "No problem! A <b>built-in practice server</b> is answering instead. " +
+                       "All examples work the same way. ✅";
+    });
+})();
+</script>
+
+</body>
+</html>
