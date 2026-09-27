@@ -1,0 +1,3451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>The Grand Spice | Royal Indian Cuisine</title>
+
+<meta name="description"
+      content="The Grand Spice — premium Indian cuisine featuring signature biryanis, vegetarian and non-vegetarian delicacies, and royal dining.">
+
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com"></script>
+
+<!-- Font Awesome -->
+<link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:wght@600;700;800&display=swap"
+      rel="stylesheet">
+
+<script>
+tailwind.config = {
+    theme: {
+        extend: {
+            colors: {
+                maroon: '#5B1725',
+                burgundy: '#741C2C',
+                saffron: '#F59E0B',
+                orange: '#EA580C',
+                gold: '#D4AF37',
+                cream: '#FFF8E7',
+                dark: '#1C1917'
+            },
+
+            fontFamily: {
+                sans: ['Plus Jakarta Sans', 'sans-serif'],
+                display: ['Playfair Display', 'serif']
+            }
+        }
+    }
+}
+</script>
+
+<style>
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background: #FFF8E7;
+    color: #1C1917;
+    overflow-x: hidden;
+}
+
+.font-display {
+    font-family: 'Playfair Display', serif;
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #FFF8E7;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #D4AF37;
+    border-radius: 20px;
+}
+
+:focus-visible {
+    outline: 2px solid #D4AF37;
+    outline-offset: 2px;
+}
+
+.mandala-bg {
+    background-image:
+        radial-gradient(
+            circle at 10% 20%,
+            rgba(212,175,55,.06) 0%,
+            transparent 40%
+        ),
+        radial-gradient(
+            circle at 90% 80%,
+            rgba(212,175,55,.06) 0%,
+            transparent 40%
+        );
+}
+
+.nav-glass {
+    background: rgba(91,23,37,.94);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+}
+
+.hero-overlay {
+    background:
+        linear-gradient(
+            180deg,
+            rgba(28,25,23,.40) 0%,
+            rgba(28,25,23,.68) 55%,
+            rgba(28,25,23,.94) 100%
+        ),
+        radial-gradient(
+            circle at 50% 30%,
+            rgba(91,23,37,.25),
+            transparent 60%
+        );
+}
+
+.diya-divider {
+    background-image:
+        radial-gradient(
+            circle,
+            #D4AF37 1.5px,
+            transparent 1.5px
+        );
+
+    background-size: 14px 14px;
+    height: 3px;
+    opacity: .5;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+.no-scrollbar {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(24px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-fade-up {
+    animation: fadeInUp .8s ease both;
+}
+
+.delay-1 {
+    animation-delay: .15s;
+}
+
+.delay-2 {
+    animation-delay: .3s;
+}
+
+.delay-3 {
+    animation-delay: .45s;
+}
+
+.delay-4 {
+    animation-delay: .6s;
+}
+
+@keyframes cardIn {
+    from {
+        opacity: 0;
+        transform: translateY(18px) scale(.98);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.card-anim {
+    animation: cardIn .5s ease both;
+}
+
+@keyframes badgePop {
+    0% {
+        transform: scale(1);
+    }
+
+    30% {
+        transform: scale(1.35);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+.cart-badge {
+    animation: badgePop .35s ease;
+}
+
+@keyframes slideInRight {
+    from {
+        transform: translateX(100%);
+    }
+
+    to {
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideOutRight {
+    from {
+        transform: translateX(0);
+    }
+
+    to {
+        transform: translateX(100%);
+    }
+}
+
+.cart-slide-in {
+    animation: slideInRight .35s cubic-bezier(.16,1,.3,1) forwards;
+}
+
+.cart-slide-out {
+    animation: slideOutRight .3s ease forwards;
+}
+
+@keyframes toastIn {
+    from {
+        opacity: 0;
+        transform: translateY(16px) scale(.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes toastOut {
+    from {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+
+    to {
+        opacity: 0;
+        transform: translateY(16px) scale(.95);
+    }
+}
+
+.toast-in {
+    animation: toastIn .3s ease forwards;
+}
+
+.toast-out {
+    animation: toastOut .25s ease forwards;
+}
+
+.food-card {
+    transition:
+        transform .3s ease,
+        box-shadow .3s ease;
+}
+
+.food-card:hover {
+    transform: translateY(-6px);
+    box-shadow:
+        0 20px 40px -12px
+        rgba(91,23,37,.25);
+}
+
+.food-img-wrap {
+    overflow: hidden;
+}
+
+.food-img-wrap img {
+    transition: transform .5s ease;
+}
+
+.food-card:hover .food-img-wrap img {
+    transform: scale(1.08);
+}
+
+.hl-card {
+    transition:
+        transform .3s ease,
+        box-shadow .3s ease;
+}
+
+.hl-card:hover {
+    transform: translateY(-8px);
+}
+
+.cat-tab {
+    white-space: nowrap;
+    transition: all .25s ease;
+}
+
+.btn-primary {
+    background:
+        linear-gradient(
+            135deg,
+            #F59E0B,
+            #EA580C
+        );
+
+    transition:
+        transform .2s ease,
+        box-shadow .2s ease;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 10px 25px -5px
+        rgba(234,88,12,.5);
+}
+
+.btn-outline-gold {
+    border: 1.5px solid #D4AF37;
+    transition: all .25s ease;
+}
+
+.btn-outline-gold:hover {
+    background: #D4AF37;
+    color: #1C1917;
+}
+
+@media(max-width:767px) {
+
+    #cartDrawer {
+        width: 100% !important;
+    }
+
+}
+
+</style>
+</head>
+
+<body class="bg-cream mandala-bg">
+
+<!-- =========================================================
+     NAVIGATION
+========================================================= -->
+
+<header
+    id="navbar"
+    class="fixed top-0 left-0 right-0 z-50 nav-glass border-b border-gold/30">
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        <div class="flex items-center justify-between py-3 gap-4">
+
+            <!-- LOGO -->
+
+            <a href="#home"
+               class="flex items-center gap-3 shrink-0">
+
+                <div
+                    class="w-11 h-11 rounded-full bg-gradient-to-br from-saffron to-orange flex items-center justify-center text-xl shadow-lg border border-gold/60">
+                    MT
+                </div>
+
+                <div class="leading-tight">
+
+                    <p
+                        class="font-display text-lg sm:text-xl text-cream font-bold tracking-wide">
+                        The Grand Spice
+                    </p>
+
+                    <p
+                        class="text-[10px] sm:text-xs text-gold tracking-[0.2em] uppercase">
+                        Royal Indian Cuisine
+                    </p>
+
+                </div>
+
+            </a>
+
+
+            <!-- DESKTOP NAV -->
+
+            <nav
+                class="hidden lg:flex items-center gap-7 text-cream/90 text-sm font-medium">
+
+                <a href="#home" class="hover:text-gold transition">
+                    Home
+                </a>
+
+                <a href="#menu" class="hover:text-gold transition">
+                    Menu
+                </a>
+
+                <a href="#menu"
+                   data-nav-filter="veg"
+                   class="hover:text-gold transition">
+                    Veg
+                </a>
+
+                <a href="#menu"
+                   data-nav-filter="non-veg"
+                   class="hover:text-gold transition">
+                    Non-Veg
+                </a>
+
+                <a href="#menu"
+                   data-nav-filter="biryani"
+                   class="hover:text-gold transition">
+                    Biryani
+                </a>
+
+                <a href="#about" class="hover:text-gold transition">
+                    About
+                </a>
+
+                <a href="#contact" class="hover:text-gold transition">
+                    Contact
+                </a>
+
+            </nav>
+
+
+            <!-- SEARCH + CART -->
+
+            <div class="flex items-center gap-2 sm:gap-3">
+
+                <div
+                    class="hidden sm:flex items-center bg-white/10 border border-gold/30 rounded-full px-4 py-2 w-48 md:w-64">
+
+                    <i class="fa-solid fa-magnifying-glass text-gold text-sm"></i>
+
+                    <input
+                        id="searchInput"
+                        type="text"
+                        placeholder="Search biryani, paneer..."
+                        aria-label="Search dishes"
+                        class="bg-transparent border-none text-cream placeholder-cream/50 text-sm px-3 w-full">
+
+                </div>
+
+
+                <button
+                    id="mobileSearchBtn"
+                    aria-label="Open search"
+                    class="sm:hidden w-10 h-10 flex items-center justify-center rounded-full text-cream border border-gold/30">
+
+                    <i class="fa-solid fa-magnifying-glass"></i>
+
+                </button>
+
+
+                <button
+                    id="cartBtn"
+                    aria-label="Open cart"
+                    class="relative flex items-center gap-2 bg-gradient-to-r from-saffron to-orange text-white px-4 py-2 rounded-full font-semibold text-sm shadow-md">
+
+                    <i class="fa-solid fa-cart-shopping"></i>
+
+                    <span class="hidden sm:inline">
+                        Cart
+                    </span>
+
+                    <span
+                        id="cartCount"
+                        class="absolute -top-2 -right-2 bg-maroon text-gold text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center border border-gold">
+                        0
+                    </span>
+
+                </button>
+
+
+                <button
+                    id="hamburgerBtn"
+                    aria-label="Open menu"
+                    class="lg:hidden w-10 h-10 flex items-center justify-center rounded-full text-cream border border-gold/30">
+
+                    <i class="fa-solid fa-bars"></i>
+
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- MOBILE SEARCH -->
+
+        <div
+            id="mobileSearchWrap"
+            class="hidden sm:hidden pb-3">
+
+            <div
+                class="flex items-center bg-white/10 border border-gold/30 rounded-full px-4 py-2">
+
+                <i class="fa-solid fa-magnifying-glass text-gold text-sm"></i>
+
+                <input
+                    id="searchInputMobile"
+                    type="text"
+                    placeholder="Search dishes..."
+                    class="bg-transparent border-none text-cream placeholder-cream/50 text-sm px-3 w-full">
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- MOBILE MENU -->
+
+    <div
+        id="mobileMenu"
+        class="hidden lg:hidden bg-maroon/98 border-t border-gold/20 px-6 py-4 space-y-3 text-cream text-sm font-medium">
+
+        <a href="#home" class="block hover:text-gold">
+            Home
+        </a>
+
+        <a href="#menu" class="block hover:text-gold">
+            Menu
+        </a>
+
+        <a href="#menu"
+           data-nav-filter="veg"
+           class="block hover:text-gold">
+            Veg
+        </a>
+
+        <a href="#menu"
+           data-nav-filter="non-veg"
+           class="block hover:text-gold">
+            Non-Veg
+        </a>
+
+        <a href="#menu"
+           data-nav-filter="biryani"
+           class="block hover:text-gold">
+            Biryani
+        </a>
+
+        <a href="#about" class="block hover:text-gold">
+            About
+        </a>
+
+        <a href="#contact" class="block hover:text-gold">
+            Contact
+        </a>
+
+    </div>
+
+</header>
+
+
+<!-- =========================================================
+     HERO
+========================================================= -->
+
+<section
+    id="home"
+    class="relative min-h-screen flex items-center pt-24 pb-16">
+
+    <div class="absolute inset-0">
+
+        <!-- LOCAL IMAGE -->
+
+        <img
+            src="images/biryani-chicken.jpg"
+            alt="Royal Hyderabadi Chicken Biryani"
+            class="w-full h-full object-cover">
+
+        <div class="absolute inset-0 hero-overlay"></div>
+
+    </div>
+
+
+    <div
+        class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-2 gap-10 items-center">
+
+        <div class="text-cream">
+
+            <p
+                class="animate-fade-up inline-block text-gold tracking-[0.25em] text-xs sm:text-sm font-semibold mb-5">
+
+                ✦ AUTHENTIC INDIAN CUISINE ✦
+
+            </p>
+
+
+            <h1
+                class="animate-fade-up delay-1 font-display text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight mb-6">
+
+                A Royal Journey of<br>
+                Indian Flavours
+
+            </h1>
+
+
+            <p
+                class="animate-fade-up delay-2 text-cream/85 text-base sm:text-lg max-w-xl mb-8 leading-relaxed">
+
+                Experience the richness of traditional Indian cuisine,
+                crafted with authentic spices, premium ingredients,
+                and a modern touch.
+
+            </p>
+
+
+            <div class="animate-fade-up delay-3 flex flex-wrap gap-4">
+
+                <a
+                    href="#menu"
+                    class="btn-primary text-white font-semibold px-7 py-3.5 rounded-full shadow-lg">
+
+                    Explore Menu
+                    <i class="fa-solid fa-arrow-right ml-1"></i>
+
+                </a>
+
+
+                <button
+                    id="chefSpecialsBtn"
+                    class="btn-outline-gold text-cream font-semibold px-7 py-3.5 rounded-full">
+
+                    Chef's Specials
+
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- SIGNATURE CARD -->
+
+        <div
+            class="animate-fade-up delay-4 lg:justify-self-end w-full max-w-sm">
+
+            <div
+                class="bg-cream/95 backdrop-blur rounded-2xl p-5 shadow-2xl border-2 border-gold/50 relative">
+
+                <div
+                    class="absolute -top-3 left-5 bg-gradient-to-r from-saffron to-orange text-white text-[11px] font-bold tracking-widest px-3 py-1 rounded-full shadow">
+
+                    THE SIGNATURE
+
+                </div>
+
+
+                <div
+                    class="rounded-xl overflow-hidden h-44 mb-4 mt-2">
+
+                    <img
+                        src="images/biryani-chicken.jpg"
+                        alt="Royal Hyderabadi Chicken Biryani"
+                        class="w-full h-full object-cover">
+
+                </div>
+
+
+                <h3
+                    class="font-display text-xl font-bold text-maroon mb-2">
+
+                    Royal Hyderabadi Chicken Biryani
+
+                </h3>
+
+
+                <ul class="text-sm text-dark/70 space-y-1 mb-4">
+
+                    <li>
+                        <i class="fa-solid fa-check text-saffron mr-2"></i>
+                        Slow-cooked basmati rice
+                    </li>
+
+                    <li>
+                        <i class="fa-solid fa-check text-saffron mr-2"></i>
+                        Authentic royal spices
+                    </li>
+
+                    <li>
+                        <i class="fa-solid fa-check text-saffron mr-2"></i>
+                        Tender chicken
+                    </li>
+
+                </ul>
+
+
+                <div class="flex items-center justify-between">
+
+                    <span class="font-display text-2xl font-bold text-orange">
+                        ₹449
+                    </span>
+
+                    <span class="text-sm font-semibold text-dark/80">
+                        <i class="fa-solid fa-star text-saffron"></i>
+                        4.9
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     HIGHLIGHTS
+========================================================= -->
+
+<section class="py-16 sm:py-20 bg-white">
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+
+            <div class="hl-card bg-cream rounded-2xl p-7 text-center border border-gold/20">
+
+                <div class="text-4xl mb-4">👨‍🍳</div>
+
+                <h3 class="font-display font-bold text-lg text-maroon mb-2">
+                    Expert Chefs
+                </h3>
+
+                <p class="text-sm text-dark/60">
+                    Traditional recipes crafted by skilled chefs
+                </p>
+
+            </div>
+
+
+            <div class="hl-card bg-cream rounded-2xl p-7 text-center border border-gold/20">
+
+                <div class="text-4xl mb-4">🌿</div>
+
+                <h3 class="font-display font-bold text-lg text-maroon mb-2">
+                    Fresh Ingredients
+                </h3>
+
+                <p class="text-sm text-dark/60">
+                    Fresh ingredients and authentic spices
+                </p>
+
+            </div>
+
+
+            <div class="hl-card bg-cream rounded-2xl p-7 text-center border border-gold/20">
+
+                <div class="text-4xl mb-4">🍚</div>
+
+                <h3 class="font-display font-bold text-lg text-maroon mb-2">
+                    Signature Biryani
+                </h3>
+
+                <p class="text-sm text-dark/60">
+                    Slow-cooked aromatic biryanis
+                </p>
+
+            </div>
+
+
+            <div class="hl-card bg-cream rounded-2xl p-7 text-center border border-gold/20">
+
+                <div class="text-4xl mb-4">👑</div>
+
+                <h3 class="font-display font-bold text-lg text-maroon mb-2">
+                    Royal Experience
+                </h3>
+
+                <p class="text-sm text-dark/60">
+                    A premium Indian dining experience
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     BIRYANI
+========================================================= -->
+
+<section
+    id="biryani-section"
+    class="py-16 sm:py-20 bg-gradient-to-b from-maroon to-burgundy">
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        <div class="text-center mb-12">
+
+            <p class="text-gold tracking-[0.2em] text-xs sm:text-sm font-semibold mb-3">
+                ✦ SIGNATURE ✦
+            </p>
+
+            <h2 class="font-display text-3xl sm:text-4xl font-bold text-cream mb-4">
+                Our Signature Biryani
+            </h2>
+
+            <p class="text-cream/70 max-w-2xl mx-auto">
+                Slow-cooked to perfection with fragrant basmati rice,
+                authentic Indian spices and rich traditional flavours.
+            </p>
+
+        </div>
+
+
+        <div
+            id="biryaniGrid"
+            class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     MENU
+========================================================= -->
+
+<section id="menu" class="py-16 sm:py-20">
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        <div class="text-center mb-10">
+
+            <p class="text-orange tracking-[0.2em] text-xs sm:text-sm font-semibold mb-3">
+                ✦ OUR MENU ✦
+            </p>
+
+            <h2 class="font-display text-3xl sm:text-4xl font-bold text-maroon mb-4">
+                Explore Our Menu
+            </h2>
+
+            <p class="text-dark/60 max-w-2xl mx-auto">
+                From aromatic biryanis to traditional desserts,
+                discover authentic Indian flavours prepared with passion.
+            </p>
+
+        </div>
+
+
+        <div
+            id="categoryTabs"
+            class="flex gap-3 overflow-x-auto no-scrollbar pb-4 mb-8 px-1">
+        </div>
+
+
+        <div
+            id="menuGrid"
+            class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        </div>
+
+
+        <div
+            id="emptyState"
+            class="hidden text-center py-20">
+
+            <div class="text-5xl mb-4">
+                🔍
+            </div>
+
+            <h3 class="font-display text-xl font-bold text-maroon mb-2">
+                No dishes found
+            </h3>
+
+            <p class="text-dark/50 text-sm">
+                Try searching for another dish.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     CHEF SPECIALS
+========================================================= -->
+
+<section
+    id="chefs-specials"
+    class="py-16 sm:py-20 bg-white">
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        <div class="text-center mb-12">
+
+            <p class="text-gold tracking-[0.2em] text-xs sm:text-sm font-semibold mb-3">
+                ✦ CHEF'S CHOICE ✦
+            </p>
+
+            <h2 class="font-display text-3xl sm:text-4xl font-bold text-maroon">
+                Chef's Signature Specials
+            </h2>
+
+        </div>
+
+
+        <div
+            id="chefSpecialsGrid"
+            class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     VEGETARIAN
+========================================================= -->
+
+<section
+    id="veg-specials"
+    class="py-16 sm:py-20 mandala-bg">
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        <div class="flex items-center gap-3 justify-center mb-12">
+
+            <span class="w-3 h-3 rounded-full bg-green-600"></span>
+
+            <h2 class="font-display text-3xl sm:text-4xl font-bold text-maroon">
+                Vegetarian Delights
+            </h2>
+
+        </div>
+
+
+        <div
+            id="vegGrid"
+            class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     NON VEG
+========================================================= -->
+
+<section
+    id="nonveg-specials"
+    class="py-16 sm:py-20 bg-white">
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        <div class="flex items-center gap-3 justify-center mb-12">
+
+            <span class="w-3 h-3 rounded-full bg-red-600"></span>
+
+            <h2 class="font-display text-3xl sm:text-4xl font-bold text-maroon">
+                Non-Vegetarian Favourites
+            </h2>
+
+        </div>
+
+
+        <div
+            id="nonvegGrid"
+            class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     ABOUT
+========================================================= -->
+
+<section
+    id="about"
+    class="py-16 sm:py-20 mandala-bg">
+
+    <div
+        class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-2 gap-12 items-center">
+
+        <div
+            class="rounded-2xl overflow-hidden shadow-xl border-2 border-gold/30 h-72 sm:h-96">
+
+            <!-- LOCAL IMAGE -->
+
+            <img
+                src="images/about-restaurant.jpg"
+                alt="The Grand Spice restaurant"
+                class="w-full h-full object-cover">
+
+        </div>
+
+
+        <div>
+
+            <p class="text-orange tracking-[0.2em] text-xs sm:text-sm font-semibold mb-3">
+                ✦ OUR STORY ✦
+            </p>
+
+            <h2 class="font-display text-3xl sm:text-4xl font-bold text-maroon mb-6">
+                Our Story
+            </h2>
+
+            <p class="text-dark/70 leading-relaxed mb-4">
+                At The Grand Spice, every dish tells a story
+                of India's rich culinary heritage.
+            </p>
+
+            <p class="text-dark/70 leading-relaxed">
+                From aromatic biryanis and traditional curries
+                to South Indian favourites and handcrafted desserts,
+                our kitchen brings authentic flavours together
+                with modern presentation.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     CONTACT
+========================================================= -->
+
+<section
+    id="contact"
+    class="py-16 sm:py-20 bg-white">
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        <div class="text-center mb-4">
+
+            <h2 class="font-display text-3xl sm:text-4xl font-bold text-maroon mb-3">
+                Visit Us
+            </h2>
+
+            <p class="text-xs uppercase tracking-widest text-dark/40 font-semibold">
+                The Grand Spice
+            </p>
+
+        </div>
+
+
+        <div
+            class="grid sm:grid-cols-3 gap-6 mt-10 max-w-4xl mx-auto">
+
+            <div class="bg-cream rounded-2xl p-6 text-center border border-gold/20">
+
+                <i class="fa-solid fa-location-dot text-2xl text-orange mb-3"></i>
+
+                <p
+                    id="contactAddress"
+                    class="text-sm text-dark/70">
+                </p>
+
+            </div>
+
+
+            <div class="bg-cream rounded-2xl p-6 text-center border border-gold/20">
+
+                <i class="fa-solid fa-phone text-2xl text-orange mb-3"></i>
+
+                <p
+                    id="contactPhone"
+                    class="text-sm text-dark/70">
+                </p>
+
+            </div>
+
+
+            <div class="bg-cream rounded-2xl p-6 text-center border border-gold/20">
+
+                <i class="fa-solid fa-envelope text-2xl text-orange mb-3"></i>
+
+                <p
+                    id="contactEmail"
+                    class="text-sm text-dark/70">
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div
+            class="mt-10 max-w-2xl mx-auto bg-gradient-to-br from-maroon to-burgundy rounded-2xl p-8 text-center text-cream">
+
+            <h3 class="font-display text-xl font-bold mb-4 text-gold">
+                Opening Hours
+            </h3>
+
+            <div class="grid sm:grid-cols-2 gap-4 text-sm">
+
+                <div>
+
+                    <p class="font-semibold text-gold/90">
+                        Monday – Friday
+                    </p>
+
+                    <p
+                        id="hoursWeekday"
+                        class="text-cream/80">
+                    </p>
+
+                </div>
+
+
+                <div>
+
+                    <p class="font-semibold text-gold/90">
+                        Saturday – Sunday
+                    </p>
+
+                    <p
+                        id="hoursWeekend"
+                        class="text-cream/80">
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     FOOTER
+========================================================= -->
+
+<footer class="bg-dark text-cream/70 pt-16 pb-8">
+
+    <div
+        class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid sm:grid-cols-2 lg:grid-cols-4 gap-10">
+
+        <div>
+
+            <div class="flex items-center gap-3 mb-4">
+
+                <div
+                    class="w-10 h-10 rounded-full bg-gradient-to-br from-saffron to-orange flex items-center justify-center text-lg">
+                    MT
+                </div>
+
+                <p class="font-display text-lg font-bold text-cream">
+                    The Grand Spice
+                </p>
+
+            </div>
+
+            <p class="text-sm leading-relaxed">
+                Authentic Indian flavours, crafted with tradition
+                and served with elegance.
+            </p>
+
+        </div>
+
+
+        <div>
+
+            <h4 class="text-gold font-semibold mb-4 text-sm tracking-wide uppercase">
+                Quick Links
+            </h4>
+
+            <ul class="space-y-2 text-sm">
+
+                <li>
+                    <a href="#home" class="hover:text-gold">
+                        Home
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#menu" class="hover:text-gold">
+                        Menu
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#biryani-section" class="hover:text-gold">
+                        Biryani
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#veg-specials" class="hover:text-gold">
+                        Vegetarian
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#nonveg-specials" class="hover:text-gold">
+                        Non-Vegetarian
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#about" class="hover:text-gold">
+                        About
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#contact" class="hover:text-gold">
+                        Contact
+                    </a>
+                </li>
+
+            </ul>
+
+        </div>
+
+
+        <div>
+
+            <h4 class="text-gold font-semibold mb-4 text-sm tracking-wide uppercase">
+                Contact
+            </h4>
+
+            <ul class="space-y-2 text-sm">
+
+                <li>
+                    <i class="fa-solid fa-location-dot mr-2 text-gold/70"></i>
+                    Kalyandurgam Road, Anantapur
+                </li>
+
+                <li>
+                    <i class="fa-solid fa-phone mr-2 text-gold/70"></i>
+                    +91 9*****
+                </li>
+
+                <li>
+                    <i class="fa-solid fa-envelope mr-2 text-gold/70"></i>
+                    hello@thegrandspice.com
+                </li>
+
+            </ul>
+
+        </div>
+
+
+        <div>
+
+            <h4 class="text-gold font-semibold mb-4 text-sm tracking-wide uppercase">
+                Follow Us
+            </h4>
+
+            <div class="flex gap-3">
+
+                <a
+                    href="#"
+                    class="w-10 h-10 rounded-full border border-gold/30 flex items-center justify-center hover:bg-gold hover:text-dark transition">
+
+                    <i class="fa-brands fa-instagram"></i>
+
+                </a>
+
+                <a
+                    href="#"
+                    class="w-10 h-10 rounded-full border border-gold/30 flex items-center justify-center hover:bg-gold hover:text-dark transition">
+
+                    <i class="fa-brands fa-facebook-f"></i>
+
+                </a>
+
+                <a
+                    href="#"
+                    class="w-10 h-10 rounded-full border border-gold/30 flex items-center justify-center hover:bg-gold hover:text-dark transition">
+
+                    <i class="fa-brands fa-youtube"></i>
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="diya-divider max-w-7xl mx-auto my-8"></div>
+
+
+    <p class="text-center text-xs text-cream/40">
+        © 2026 The Grand Spice. All rights reserved.
+    </p>
+
+</footer>
+
+
+<!-- =========================================================
+     CART
+========================================================= -->
+
+<div
+    id="cartOverlay"
+    class="hidden fixed inset-0 bg-black/50 z-[60]">
+</div>
+
+
+<aside
+    id="cartDrawer"
+    class="hidden fixed top-0 right-0 h-full w-full sm:w-[420px] bg-white z-[70] flex-col shadow-2xl">
+
+    <div
+        class="flex items-center justify-between px-6 py-5 border-b border-gold/20 bg-maroon text-cream">
+
+        <h3 class="font-display text-xl font-bold">
+            Your Cart
+        </h3>
+
+        <button
+            id="closeCartBtn"
+            class="w-9 h-9 rounded-full flex items-center justify-center hover:bg-white/10">
+
+            <i class="fa-solid fa-xmark text-lg"></i>
+
+        </button>
+
+    </div>
+
+
+    <div
+        id="cartItemsWrap"
+        class="flex-1 overflow-y-auto px-6 py-5 space-y-4">
+    </div>
+
+
+    <div
+        id="cartEmptyState"
+        class="hidden flex-1 flex-col items-center justify-center text-center px-8">
+
+        <div class="text-5xl mb-4">
+            🛒
+        </div>
+
+        <h4 class="font-display text-lg font-bold text-maroon mb-2">
+            Your cart is empty
+        </h4>
+
+        <p class="text-sm text-dark/50 mb-6">
+            Add something delicious from our menu.
+        </p>
+
+        <button
+            id="cartEmptyExploreBtn"
+            class="btn-primary text-white font-semibold px-6 py-3 rounded-full text-sm">
+
+            Explore Menu
+
+        </button>
+
+    </div>
+
+
+    <div
+        id="cartFooter"
+        class="hidden border-t border-gold/20 px-6 py-5 space-y-2 bg-cream">
+
+        <div class="flex justify-between text-sm text-dark/70">
+
+            <span>
+                Subtotal
+            </span>
+
+            <span id="subtotalValue">
+                ₹0.00
+            </span>
+
+        </div>
+
+
+        <div class="flex justify-between text-sm text-dark/70">
+
+            <span>
+                GST (5%)
+            </span>
+
+            <span id="gstValue">
+                ₹0.00
+            </span>
+
+        </div>
+
+
+        <div
+            class="flex justify-between text-base font-bold text-maroon pt-2 border-t border-gold/20">
+
+            <span>
+                Total
+            </span>
+
+            <span id="totalValue">
+                ₹0.00
+            </span>
+
+        </div>
+
+
+        <button
+            id="placeOrderBtn"
+            class="w-full btn-primary text-white font-semibold py-3.5 rounded-full mt-3">
+
+            Place Order
+
+        </button>
+
+    </div>
+
+</aside>
+
+
+<div
+    id="toastContainer"
+    class="fixed bottom-6 left-1/2 -translate-x-1/2 z-[80] flex flex-col items-center gap-2 pointer-events-none">
+</div>
+
+
+<!-- =========================================================
+     JAVASCRIPT
+========================================================= -->
+
+<script>
+
+/* =========================================================
+   RESTAURANT CONFIG
+========================================================= */
+
+const restaurantConfig = {
+
+    name: "The Grand Spice",
+
+    tagline: "Royal Indian Cuisine",
+
+    phone: "+91 9**** *****",
+
+    email: "hello@thegrandspice.com",
+
+    address: "Kalyandurgam Road, Anantapur",
+
+    openingHours: {
+        weekdays: "11:00 AM – 10:30 PM",
+        weekends: "11:00 AM – 11:30 PM"
+    },
+
+    gstRate: 0.05
+
+};
+
+
+/* =========================================================
+   LOCAL IMAGE FUNCTION
+   THIS IS THE IMPORTANT FIX
+========================================================= */
+
+function img(name) {
+
+    /*
+       Your images are inside:
+
+       images/
+
+       Example:
+
+       img("biryani-chicken")
+
+       becomes:
+
+       images/biryani-chicken.jpg
+    */
+
+    return "images/" + encodeURIComponent(name) + ".jpg";
+
+}
+
+
+/* =========================================================
+   MENU DATA
+========================================================= */
+
+const menuItems = [
+
+    {
+        id: 1,
+        name: "Royal Hyderabadi Chicken Biryani",
+        categories: ["biryani"],
+        type: "non-veg",
+        chefSpecial: true,
+        price: 449,
+        rating: 4.9,
+        reviews: 328,
+        badge: "Chef's Special",
+        description: "Fragrant basmati rice slow-cooked with tender chicken, saffron and royal Hyderabadi spices.",
+        image: img("biryani-chicken")
+    },
+
+    {
+        id: 2,
+        name: "Royal Mutton Biryani",
+        categories: ["biryani"],
+        type: "non-veg",
+        chefSpecial: true,
+        price: 549,
+        rating: 4.8,
+        reviews: 256,
+        badge: "Chef's Special",
+        description: "Tender goat meat dum-cooked with fragrant basmati rice and warm whole spices.",
+        image: img("biryani-mutton")
+    },
+
+    {
+        id: 3,
+        name: "Grand Spice Egg Biryani",
+        categories: ["biryani"],
+        type: "non-veg",
+        chefSpecial: false,
+        price: 349,
+        rating: 4.6,
+        reviews: 142,
+        badge: "Popular",
+        description: "Boiled eggs layered with saffron basmati rice, fried onions and mint.",
+
+        /* YOUR ACTUAL FILE NAME */
+        image: img("biryani-egg (1)")
+    },
+
+    {
+        id: 4,
+        name: "Royal Veg Dum Biryani",
+        categories: ["biryani"],
+        type: "veg",
+        chefSpecial: false,
+        price: 329,
+        rating: 4.7,
+        reviews: 198,
+        badge: "Bestseller",
+        description: "Garden vegetables and paneer dum-cooked with fragrant basmati rice.",
+        image: img("biryani-veg")
+    },
+
+    {
+        id: 5,
+        name: "Paneer Tikka Biryani",
+        categories: ["biryani"],
+        type: "veg",
+        chefSpecial: true,
+        price: 379,
+        rating: 4.8,
+        reviews: 175,
+        badge: "Chef's Special",
+        description: "Smoky grilled paneer tikka layered through saffron basmati rice.",
+        image: img("biryani-paneer")
+    },
+
+    {
+        id: 6,
+        name: "Chicken 65 Biryani",
+        categories: ["biryani"],
+        type: "non-veg",
+        chefSpecial: true,
+        price: 469,
+        rating: 4.7,
+        reviews: 163,
+        badge: "Spicy",
+        description: "Crispy spiced chicken 65 folded into aromatic basmati biryani rice.",
+        image: img("biryani-chicken65")
+    },
+
+    {
+        id: 7,
+        name: "Veg Samosa",
+        categories: ["starters"],
+        type: "veg",
+        chefSpecial: false,
+        price: 149,
+        rating: 4.5,
+        reviews: 210,
+        badge: "Bestseller",
+        description: "Crisp pastry parcels filled with spiced potatoes and peas.",
+        image: img("samosa")
+    },
+
+    {
+        id: 8,
+        name: "Paneer Tikka",
+        categories: ["starters", "north-indian"],
+        type: "veg",
+        chefSpecial: false,
+        price: 289,
+        rating: 4.7,
+        reviews: 188,
+        badge: "Popular",
+        description: "Char-grilled cottage cheese marinated in yogurt and tandoori spices.",
+        image: img("paneer-tikka")
+    },
+
+    {
+        id: 9,
+        name: "Hara Bhara Kebab",
+        categories: ["starters"],
+        type: "veg",
+        chefSpecial: false,
+        price: 259,
+        rating: 4.5,
+        reviews: 96,
+        badge: "Vegetarian",
+        description: "Spinach and green pea patties shallow-fried until golden.",
+        image: img("hara-bhara-kebab")
+    },
+
+    {
+        id: 10,
+        name: "Pani Puri & Chaat Sampler",
+        categories: ["starters"],
+        type: "veg",
+        chefSpecial: false,
+        price: 199,
+        rating: 4.6,
+        reviews: 132,
+        badge: "New",
+        description: "Classic street-style chaats with tangy tamarind and mint water.",
+        image: img("chaat")
+    },
+
+    {
+        id: 11,
+        name: "Stuffed Paneer Hariyali Tikka",
+        categories: ["starters"],
+        type: "veg",
+        chefSpecial: false,
+        price: 309,
+        rating: 4.6,
+        reviews: 87,
+        badge: "Signature",
+        description: "Cottage cheese stuffed and marinated in mint-coriander masala.",
+        image: img("hariyali-tikka")
+    },
+
+    {
+        id: 12,
+        name: "Chicken 65",
+        categories: ["starters"],
+        type: "non-veg",
+        chefSpecial: false,
+        price: 289,
+        rating: 4.8,
+        reviews: 246,
+        badge: "Spicy",
+        description: "Deep-fried curry-leaf spiced chicken bites.",
+        image: img("chicken-65")
+    },
+
+    {
+        id: 13,
+        name: "Chicken Tikka",
+        categories: ["starters", "north-indian"],
+        type: "non-veg",
+        chefSpecial: false,
+        price: 319,
+        rating: 4.7,
+        reviews: 201,
+        badge: "Bestseller",
+        description: "Charred tandoori chicken marinated in yogurt and spices.",
+        image: img("chicken-tikka")
+    },
+
+    {
+        id: 14,
+        name: "Amritsari Fish Tikka",
+        categories: ["starters"],
+        type: "non-veg",
+        chefSpecial: false,
+        price: 349,
+        rating: 4.6,
+        reviews: 94,
+        badge: "Signature",
+        description: "Fish fillets coated in a crisp carom-seed batter.",
+        image: img("fish-tikka")
+    },
+
+    {
+        id: 15,
+        name: "Chicken Seekh Kebab",
+        categories: ["starters"],
+        type: "non-veg",
+        chefSpecial: false,
+        price: 329,
+        rating: 4.7,
+        reviews: 118,
+        badge: "Popular",
+        description: "Minced chicken skewers grilled over charcoal.",
+        image: img("seekh-kebab")
+    },
+
+    {
+        id: 16,
+        name: "Butter Chicken",
+        categories: ["north-indian"],
+        type: "non-veg",
+        chefSpecial: false,
+        price: 379,
+        rating: 4.9,
+        reviews: 412,
+        badge: "Bestseller",
+        description: "Tandoori chicken simmered in a velvety tomato-butter gravy.",
+        image: img("butter-chicken")
+    },
+
+    {
+        id: 17,
+        name: "Dal Makhani",
+        categories: ["north-indian"],
+        type: "veg",
+        chefSpecial: false,
+        price: 259,
+        rating: 4.7,
+        reviews: 233,
+        badge: "Vegetarian",
+        description: "Black lentils slow-cooked with butter and cream.",
+        image: img("dal-makhani")
+    },
+
+    {
+        id: 18,
+        name: "Shahi Paneer Korma",
+        categories: ["north-indian"],
+        type: "veg",
+        chefSpecial: false,
+        price: 289,
+        rating: 4.6,
+        reviews: 156,
+        badge: "Premium",
+        description: "Cottage cheese simmered in rich cashew and tomato gravy.",
+        image: img("shahi-paneer")
+    },
+
+    {
+        id: 19,
+        name: "Mutton Rogan Josh",
+        categories: ["north-indian"],
+        type: "non-veg",
+        chefSpecial: false,
+        price: 429,
+        rating: 4.8,
+        reviews: 178,
+        badge: "Signature",
+        description: "Kashmiri-style slow-braised mutton in a deep red chili gravy.",
+        image: img("rogan-josh")
+    },
+
+    {
+        id: 20,
+        name: "Garlic Naan",
+        categories: ["north-indian"],
+        type: "veg",
+        chefSpecial: false,
+        price: 79,
+        rating: 4.6,
+        reviews: 267,
+        badge: "Popular",
+        description: "Tandoor-baked flatbread topped with garlic and coriander.",
+        image: img("garlic-naan")
+    },
+
+    {
+        id: 21,
+        name: "Truffle Butter Garlic Naan with Paneer Lababdar",
+        categories: ["north-indian"],
+        type: "veg",
+        chefSpecial: true,
+        price: 449,
+        rating: 4.8,
+        reviews: 76,
+        badge: "Premium",
+        description: "Truffle-butter naan paired with rich paneer lababdar.",
+        image: img("truffle-naan-lababdar")
+    },
+
+    {
+        id: 22,
+        name: "Mysore Masala Dosa",
+        categories: ["south-indian"],
+        type: "veg",
+        chefSpecial: false,
+        price: 249,
+        rating: 4.7,
+        reviews: 203,
+        badge: "Spicy",
+        description: "Crisp rice crepe with red chutney and spiced potato filling.",
+        image: img("mysore-masala-dosa")
+    },
+
+    {
+        id: 23,
+        name: "Masala Dosa",
+        categories: ["south-indian"],
+        type: "veg",
+        chefSpecial: false,
+        price: 219,
+        rating: 4.8,
+        reviews: 289,
+        badge: "Bestseller",
+        description: "Golden rice and lentil crepe filled with spiced potato masala.",
+        image: img("masala-dosa")
+    },
+
+    {
+        id: 24,
+        name: "Chettinad Chicken Dosa",
+        categories: ["south-indian"],
+        type: "non-veg",
+        chefSpecial: false,
+        price: 299,
+        rating: 4.6,
+        reviews: 112,
+        badge: "Signature",
+        description: "Crisp dosa served with fiery Chettinad-style chicken curry.",
+        image: img("chettinad-dosa")
+    },
+
+    {
+        id: 25,
+        name: "Ghee Podi Idli Platter",
+        categories: ["south-indian"],
+        type: "veg",
+        chefSpecial: false,
+        price: 189,
+        rating: 4.5,
+        reviews: 167,
+        badge: "Popular",
+        description: "Steamed rice cakes tossed in ghee and roasted spice powder.",
+        image: img("idli")
+    },
+
+    {
+        id: 26,
+        name: "Medu Vada",
+        categories: ["south-indian"],
+        type: "veg",
+        chefSpecial: false,
+        price: 159,
+        rating: 4.5,
+        reviews: 134,
+        badge: "Vegetarian",
+        description: "Crisp lentil doughnuts served with sambar and chutney.",
+        image: img("medu-vada")
+    },
+
+    {
+        id: 27,
+        name: "Malabar Prawn Curry with Appam",
+        categories: ["south-indian"],
+        type: "non-veg",
+        chefSpecial: false,
+        price: 399,
+        rating: 4.7,
+        reviews: 98,
+        badge: "Signature",
+        description: "Prawns simmered in coconut curry with rice appams.",
+        image: img("prawn-curry-appam")
+    },
+
+    {
+        id: 28,
+        name: "Sizzling Hot Gulab Jamun with Vanilla Ice Cream",
+        categories: ["desserts"],
+        type: "veg",
+        chefSpecial: false,
+        price: 199,
+        rating: 4.8,
+        reviews: 221,
+        badge: "Bestseller",
+        description: "Warm gulab jamun served sizzling with vanilla ice cream.",
+        image: img("gulab-jamun-icecream")
+    },
+
+    {
+        id: 29,
+        name: "Royal Kesari Malai Phirni",
+        categories: ["desserts"],
+        type: "veg",
+        chefSpecial: false,
+        price: 179,
+        rating: 4.6,
+        reviews: 112,
+        badge: "Premium",
+        description: "Creamy saffron rice pudding served in a traditional clay bowl.",
+        image: img("phirni")
+    },
+
+    {
+        id: 30,
+        name: "Gajar Ka Halwa Tart with Rabri",
+        categories: ["desserts"],
+        type: "veg",
+        chefSpecial: false,
+        price: 219,
+        rating: 4.7,
+        reviews: 89,
+        badge: "New",
+        description: "Spiced carrot halwa tart topped with sweet rabri.",
+        image: img("gajar-halwa")
+    },
+
+    {
+        id: 31,
+        name: "Rasmalai",
+        categories: ["desserts"],
+        type: "veg",
+        chefSpecial: false,
+        price: 159,
+        rating: 4.7,
+        reviews: 198,
+        badge: "Popular",
+        description: "Soft cottage cheese discs soaked in saffron sweet milk.",
+        image: img("rasmalai")
+    },
+
+    {
+        id: 32,
+        name: "Kulfi Falooda",
+        categories: ["desserts"],
+        type: "veg",
+        chefSpecial: false,
+        price: 189,
+        rating: 4.6,
+        reviews: 145,
+        badge: "Signature",
+        description: "Vermicelli, rose syrup and pistachio kulfi.",
+        image: img("kulfi-falooda")
+    },
+
+    {
+        id: 33,
+        name: "Royal Kesar Pista Lassi",
+        categories: ["drinks"],
+        type: "veg",
+        chefSpecial: false,
+        price: 149,
+        rating: 4.7,
+        reviews: 176,
+        badge: "Premium",
+        description: "Saffron and pistachio yogurt drink.",
+        image: img("kesar-pista-lassi")
+    },
+
+    {
+        id: 34,
+        name: "Paani Wala Shikanji & Mint Cooler",
+        categories: ["drinks"],
+        type: "veg",
+        chefSpecial: false,
+        price: 99,
+        rating: 4.4,
+        reviews: 67,
+        badge: "New",
+        description: "Tangy Indian lemonade with mint and roasted cumin.",
+        image: img("shikanji")
+    },
+
+    {
+        id: 35,
+        name: "Masala Chai Pot with Shrewsbury Biscuits",
+        categories: ["drinks"],
+        type: "veg",
+        chefSpecial: false,
+        price: 159,
+        rating: 4.6,
+        reviews: 103,
+        badge: "Signature",
+        description: "Spiced milk tea served with crisp biscuits.",
+        image: img("masala-chai")
+    },
+
+    {
+        id: 36,
+        name: "Mango Lassi",
+        categories: ["drinks"],
+        type: "veg",
+        chefSpecial: false,
+        price: 129,
+        rating: 4.7,
+        reviews: 234,
+        badge: "Bestseller",
+        description: "Thick yogurt shake blended with ripe mango.",
+        image: img("mango-lassi")
+    },
+
+    {
+        id: 37,
+        name: "Filter Coffee",
+        categories: ["drinks"],
+        type: "veg",
+        chefSpecial: false,
+        price: 99,
+        rating: 4.6,
+        reviews: 187,
+        badge: "Popular",
+        description: "Traditional South Indian decoction coffee.",
+        image: img("filter-coffee")
+    },
+
+    {
+        id: 38,
+        name: "Lassi",
+        categories: ["drinks"],
+        type: "veg",
+        chefSpecial: false,
+        price: 109,
+        rating: 4.5,
+        reviews: 145,
+        badge: "Vegetarian",
+        description: "Classic sweet yogurt drink with cream and pistachios.",
+        image: img("lassi")
+    },
+
+    {
+        id: 39,
+        name: "Grand Spice Sizzling Seafood Platter",
+        categories: ["starters"],
+        type: "non-veg",
+        chefSpecial: true,
+        price: 699,
+        rating: 4.9,
+        reviews: 58,
+        badge: "Premium",
+        description: "Sizzling assortment of prawns, fish and calamari.",
+        image: img("seafood-platter")
+    }
+
+];
+
+
+/* =========================================================
+   CATEGORY TABS
+========================================================= */
+
+const categoryTabsList = [
+
+    { key: "all", label: "All" },
+
+    { key: "chefs-special", label: "Chef's Specials" },
+
+    { key: "biryani", label: "Biryani" },
+
+    { key: "veg", label: "Vegetarian" },
+
+    { key: "non-veg", label: "Non-Vegetarian" },
+
+    { key: "north-indian", label: "North Indian" },
+
+    { key: "south-indian", label: "South Indian" },
+
+    { key: "starters", label: "Starters" },
+
+    { key: "desserts", label: "Desserts" },
+
+    { key: "drinks", label: "Drinks" }
+
+];
+
+
+/* =========================================================
+   DOM
+========================================================= */
+
+const menuGridEl =
+    document.getElementById("menuGrid");
+
+const emptyStateEl =
+    document.getElementById("emptyState");
+
+const categoryTabsEl =
+    document.getElementById("categoryTabs");
+
+const biryaniGridEl =
+    document.getElementById("biryaniGrid");
+
+const chefSpecialsGridEl =
+    document.getElementById("chefSpecialsGrid");
+
+const vegGridEl =
+    document.getElementById("vegGrid");
+
+const nonvegGridEl =
+    document.getElementById("nonvegGrid");
+
+const searchInputEl =
+    document.getElementById("searchInput");
+
+const searchInputMobileEl =
+    document.getElementById("searchInputMobile");
+
+const cartBtn =
+    document.getElementById("cartBtn");
+
+const cartDrawer =
+    document.getElementById("cartDrawer");
+
+const cartOverlay =
+    document.getElementById("cartOverlay");
+
+const closeCartBtn =
+    document.getElementById("closeCartBtn");
+
+const cartItemsWrap =
+    document.getElementById("cartItemsWrap");
+
+const cartEmptyState =
+    document.getElementById("cartEmptyState");
+
+const cartFooter =
+    document.getElementById("cartFooter");
+
+const cartCountEl =
+    document.getElementById("cartCount");
+
+const subtotalValueEl =
+    document.getElementById("subtotalValue");
+
+const gstValueEl =
+    document.getElementById("gstValue");
+
+const totalValueEl =
+    document.getElementById("totalValue");
+
+const placeOrderBtn =
+    document.getElementById("placeOrderBtn");
+
+const cartEmptyExploreBtn =
+    document.getElementById("cartEmptyExploreBtn");
+
+const toastContainer =
+    document.getElementById("toastContainer");
+
+const hamburgerBtn =
+    document.getElementById("hamburgerBtn");
+
+const mobileMenu =
+    document.getElementById("mobileMenu");
+
+const mobileSearchBtn =
+    document.getElementById("mobileSearchBtn");
+
+const mobileSearchWrap =
+    document.getElementById("mobileSearchWrap");
+
+const chefSpecialsBtn =
+    document.getElementById("chefSpecialsBtn");
+
+
+/* =========================================================
+   STATE
+========================================================= */
+
+let activeCategory = "all";
+
+let searchQuery = "";
+
+let cart = [];
+
+
+const currencyFormatter =
+    new Intl.NumberFormat("en-IN", {
+        style: "currency",
+        currency: "INR"
+    });
+
+
+/* =========================================================
+   RATING
+========================================================= */
+
+function ratingStars(rating) {
+
+    const full =
+        Math.round(rating);
+
+    let stars = "";
+
+    for (let i = 0; i < 5; i++) {
+
+        stars += `
+            <i class="fa-solid fa-star
+            ${i < full
+                ? "text-saffron"
+                : "text-dark/15"}
+            text-xs"></i>
+        `;
+
+    }
+
+    return stars;
+
+}
+
+
+/* =========================================================
+   VEG INDICATOR
+========================================================= */
+
+function vegIndicator(type) {
+
+    if (type === "veg") {
+
+        return `
+            <span class="inline-flex items-center gap-1.5 text-[11px] font-bold text-green-700">
+
+                <span class="w-3.5 h-3.5 border-2 border-green-600 rounded-sm flex items-center justify-center">
+
+                    <span class="w-1.5 h-1.5 rounded-full bg-green-600"></span>
+
+                </span>
+
+                VEG
+
+            </span>
+        `;
+
+    }
+
+    return `
+        <span class="inline-flex items-center gap-1.5 text-[11px] font-bold text-red-700">
+
+            <span class="w-3.5 h-3.5 border-2 border-red-600 rounded-sm flex items-center justify-center">
+
+                <span class="w-1.5 h-1.5 rounded-full bg-red-600"></span>
+
+            </span>
+
+            NON-VEG
+
+        </span>
+    `;
+
+}
+
+
+/* =========================================================
+   BADGE
+========================================================= */
+
+function badgeChip(badge) {
+
+    if (!badge) {
+        return "";
+    }
+
+    return `
+        <span
+            class="absolute top-3 left-3 bg-gradient-to-r from-saffron to-orange text-white text-[10px] font-bold px-2.5 py-1 rounded-full shadow flex items-center gap-1">
+
+            <i class="fa-solid fa-star text-[9px]"></i>
+
+            ${badge}
+
+        </span>
+    `;
+
+}
+
+
+/* =========================================================
+   FOOD CARD
+========================================================= */
+
+function foodCardHTML(item, index) {
+
+    return `
+
+        <article
+            class="food-card card-anim bg-white rounded-2xl overflow-hidden border border-gold/15 shadow-sm flex flex-col"
+            style="animation-delay:${(index % 12) * .04}s">
+
+            <div class="relative food-img-wrap h-48">
+
+                <img
+                    src="${item.image}"
+                    alt="${item.name}"
+                    loading="lazy"
+                    class="w-full h-full object-cover"
+                    onerror="this.style.display='none'; this.parentElement.classList.add('bg-gradient-to-br','from-maroon','to-burgundy');">
+
+                ${badgeChip(item.badge)}
+
+            </div>
+
+
+            <div class="p-4 flex flex-col flex-1">
+
+                <div class="mb-1.5">
+
+                    ${vegIndicator(item.type)}
+
+                </div>
+
+
+                <h3
+                    class="font-display font-bold text-base text-maroon mb-1 leading-snug">
+
+                    ${item.name}
+
+                </h3>
+
+
+                <p
+                    class="text-xs text-dark/55 mb-3 leading-relaxed line-clamp-2">
+
+                    ${item.description}
+
+                </p>
+
+
+                <div class="flex items-center gap-1.5 text-xs mb-3">
+
+                    ${ratingStars(item.rating)}
+
+                    <span class="text-dark/60 font-medium ml-1">
+
+                        ${item.rating}
+                        (${item.reviews})
+
+                    </span>
+
+                </div>
+
+
+                <div class="mt-auto flex items-center justify-between">
+
+                    <span
+                        class="font-display text-lg font-bold text-orange">
+
+                        ₹${item.price}
+
+                    </span>
+
+
+                    <button
+                        data-add-id="${item.id}"
+                        aria-label="Add ${item.name} to cart"
+                        class="add-btn bg-maroon hover:bg-burgundy text-cream text-xs font-bold px-4 py-2 rounded-full transition flex items-center gap-1.5">
+
+                        <i class="fa-solid fa-plus text-[10px]"></i>
+
+                        Add
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </article>
+
+    `;
+
+}
+
+
+/* =========================================================
+   CATEGORY TABS
+========================================================= */
+
+function renderCategoryTabs() {
+
+    categoryTabsEl.innerHTML =
+        categoryTabsList.map(tab => `
+
+            <button
+                data-cat="${tab.key}"
+                class="cat-tab px-5 py-2.5 rounded-full text-sm font-semibold border
+                ${
+                    activeCategory === tab.key
+                    ? "bg-gradient-to-r from-maroon to-burgundy text-cream border-maroon shadow"
+                    : "bg-white text-dark/70 border-gold/25 hover:border-gold"
+                }">
+
+                ${tab.label}
+
+            </button>
+
+        `).join("");
+
+}
+
+
+/* =========================================================
+   SEARCH
+========================================================= */
+
+function matchesSearch(item, q) {
+
+    if (!q) {
+        return true;
+    }
+
+    const haystack = [
+
+        item.name,
+
+        item.description,
+
+        ...item.categories,
+
+        item.badge || "",
+
+        item.type,
+
+        item.type === "veg"
+            ? "vegetarian"
+            : "non vegetarian"
+
+    ]
+    .join(" ")
+    .toLowerCase();
+
+    return haystack.includes(q);
+
+}
+
+
+/* =========================================================
+   CATEGORY MATCH
+========================================================= */
+
+function matchesCategory(item, category) {
+
+    if (category === "all") {
+        return true;
+    }
+
+    if (category === "chefs-special") {
+        return item.chefSpecial === true;
+    }
+
+    if (
+        category === "veg" ||
+        category === "non-veg"
+    ) {
+        return item.type === category;
+    }
+
+    return item.categories.includes(category);
+
+}
+
+
+/* =========================================================
+   MENU
+========================================================= */
+
+function renderMenu() {
+
+    const q =
+        searchQuery
+        .trim()
+        .toLowerCase();
+
+    const filtered =
+        menuItems.filter(item =>
+
+            matchesCategory(
+                item,
+                activeCategory
+            )
+
+            &&
+
+            matchesSearch(
+                item,
+                q
+            )
+
+        );
+
+
+    if (filtered.length === 0) {
+
+        menuGridEl.innerHTML = "";
+
+        emptyStateEl.classList.remove("hidden");
+
+        return;
+
+    }
+
+
+    emptyStateEl.classList.add("hidden");
+
+    menuGridEl.innerHTML =
+        filtered
+        .map(foodCardHTML)
+        .join("");
+
+}
+
+
+/* =========================================================
+   BIRYANI
+========================================================= */
+
+function renderBiryaniSection() {
+
+    const biryanis =
+        menuItems.filter(item =>
+            item.categories.includes("biryani")
+        );
+
+    biryaniGridEl.innerHTML =
+        biryanis
+        .map(foodCardHTML)
+        .join("");
+
+}
+
+
+/* =========================================================
+   CHEF SPECIALS
+========================================================= */
+
+function renderChefSpecials() {
+
+    const specials =
+        menuItems.filter(item =>
+            item.chefSpecial
+        );
+
+    chefSpecialsGridEl.innerHTML =
+        specials
+        .map(foodCardHTML)
+        .join("");
+
+}
+
+
+/* =========================================================
+   VEG / NON VEG
+========================================================= */
+
+function renderVegNonVeg() {
+
+    const vegs =
+        menuItems
+        .filter(item => item.type === "veg")
+        .slice(0, 8);
+
+    const nonvegs =
+        menuItems
+        .filter(item => item.type === "non-veg")
+        .slice(0, 8);
+
+
+    vegGridEl.innerHTML =
+        vegs
+        .map(foodCardHTML)
+        .join("");
+
+
+    nonvegGridEl.innerHTML =
+        nonvegs
+        .map(foodCardHTML)
+        .join("");
+
+}
+
+
+/* =========================================================
+   CATEGORY SETTER
+========================================================= */
+
+function setCategory(category) {
+
+    activeCategory =
+        category;
+
+    renderCategoryTabs();
+
+    renderMenu();
+
+    attachCardListeners();
+
+}
+
+
+/* =========================================================
+   SEARCH SETTER
+========================================================= */
+
+function setSearch(value) {
+
+    searchQuery = value;
+
+    searchInputEl.value = value;
+
+    searchInputMobileEl.value = value;
+
+    renderMenu();
+
+    attachCardListeners();
+
+}
+
+
+/* =========================================================
+   CART
+========================================================= */
+
+function addToCart(id) {
+
+    const item =
+        menuItems.find(i => i.id === id);
+
+    if (!item) {
+        return;
+    }
+
+
+    const existing =
+        cart.find(c => c.id === id);
+
+
+    if (existing) {
+
+        existing.qty += 1;
+
+    } else {
+
+        cart.push({
+            id: id,
+            qty: 1
+        });
+
+    }
+
+
+    renderCart();
+
+    showToast(
+        `${item.name} added to your cart.`
+    );
+
+    pulseCartBadge();
+
+}
+
+
+/* =========================================================
+   UPDATE QUANTITY
+========================================================= */
+
+function updateQty(id, delta) {
+
+    const entry =
+        cart.find(c => c.id === id);
+
+    if (!entry) {
+        return;
+    }
+
+
+    entry.qty += delta;
+
+
+    if (entry.qty <= 0) {
+
+        removeFromCart(
+            id,
+            false
+        );
+
+        return;
+
+    }
+
+
+    renderCart();
+
+}
+
+
+/* =========================================================
+   REMOVE
+========================================================= */
+
+function removeFromCart(
+    id,
+    notify = true
+) {
+
+    cart =
+        cart.filter(c => c.id !== id);
+
+    renderCart();
+
+
+    if (notify) {
+
+        showToast(
+            "Item removed from your cart."
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   CART BADGE
+========================================================= */
+
+function pulseCartBadge() {
+
+    cartCountEl.classList.remove(
+        "cart-badge"
+    );
+
+    void cartCountEl.offsetWidth;
+
+    cartCountEl.classList.add(
+        "cart-badge"
+    );
+
+}
+
+
+/* =========================================================
+   TOTALS
+========================================================= */
+
+function getCartTotals() {
+
+    let subtotal = 0;
+
+    let count = 0;
+
+
+    cart.forEach(entry => {
+
+        const item =
+            menuItems.find(
+                i => i.id === entry.id
+            );
+
+
+        if (item) {
+
+            subtotal +=
+                item.price *
+                entry.qty;
+
+            count += entry.qty;
+
+        }
+
+    });
+
+
+    const gst =
+        subtotal *
+        restaurantConfig.gstRate;
+
+
+    const total =
+        subtotal +
+        gst;
+
+
+    return {
+        subtotal,
+        gst,
+        total,
+        count
+    };
+
+}
+
+
+/* =========================================================
+   CART ROW
+========================================================= */
+
+function cartItemRowHTML(entry) {
+
+    const item =
+        menuItems.find(
+            i => i.id === entry.id
+        );
+
+    if (!item) {
+        return "";
+    }
+
+
+    return `
+
+        <div
+            class="flex gap-3 items-center border-b border-gold/10 pb-4">
+
+            <img
+                src="${item.image}"
+                alt="${item.name}"
+                class="w-16 h-16 rounded-xl object-cover shrink-0">
+
+
+            <div class="flex-1 min-w-0">
+
+                <p
+                    class="text-sm font-semibold text-maroon truncate">
+
+                    ${item.name}
+
+                </p>
+
+
+                <p class="text-xs text-dark/50 mb-2">
+
+                    ${currencyFormatter.format(item.price)}
+
+                </p>
+
+
+                <div class="flex items-center gap-2">
+
+                    <button
+                        data-qty-minus="${item.id}"
+                        class="w-7 h-7 rounded-full border border-gold/40 flex items-center justify-center text-maroon hover:bg-maroon hover:text-cream">
+
+                        <i class="fa-solid fa-minus"></i>
+
+                    </button>
+
+
+                    <span
+                        class="text-sm font-semibold w-5 text-center">
+
+                        ${entry.qty}
+
+                    </span>
+
+
+                    <button
+                        data-qty-plus="${item.id}"
+                        class="w-7 h-7 rounded-full border border-gold/40 flex items-center justify-center text-maroon hover:bg-maroon hover:text-cream">
+
+                        <i class="fa-solid fa-plus"></i>
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <div class="flex flex-col items-end gap-2">
+
+                <span class="text-sm font-bold text-orange">
+
+                    ${currencyFormatter.format(
+                        item.price * entry.qty
+                    )}
+
+                </span>
+
+
+                <button
+                    data-remove="${item.id}"
+                    class="text-xs text-red-500">
+
+                    <i class="fa-solid fa-trash"></i>
+
+                </button>
+
+            </div>
+
+        </div>
+
+    `;
+
+}
+
+
+/* =========================================================
+   RENDER CART
+========================================================= */
+
+function renderCart() {
+
+    const {
+        subtotal,
+        gst,
+        total,
+        count
+    } = getCartTotals();
+
+
+    cartCountEl.textContent =
+        count;
+
+
+    if (cart.length === 0) {
+
+        cartItemsWrap.classList.add("hidden");
+
+        cartFooter.classList.add("hidden");
+
+        cartEmptyState.classList.remove("hidden");
+
+        cartEmptyState.classList.add("flex");
+
+    } else {
+
+        cartEmptyState.classList.add("hidden");
+
+        cartEmptyState.classList.remove("flex");
+
+        cartItemsWrap.classList.remove("hidden");
+
+        cartFooter.classList.remove("hidden");
+
+        cartItemsWrap.innerHTML =
+            cart.map(
+                cartItemRowHTML
+            ).join("");
+
+    }
+
+
+    subtotalValueEl.textContent =
+        currencyFormatter.format(subtotal);
+
+    gstValueEl.textContent =
+        currencyFormatter.format(gst);
+
+    totalValueEl.textContent =
+        currencyFormatter.format(total);
+
+
+    attachCartRowListeners();
+
+}
+
+
+/* =========================================================
+   CART LISTENERS
+========================================================= */
+
+function attachCartRowListeners() {
+
+    cartItemsWrap
+        .querySelectorAll("[data-qty-plus]")
+        .forEach(button => {
+
+            button.addEventListener(
+                "click",
+                () => {
+
+                    updateQty(
+                        Number(
+                            button.dataset.qtyPlus
+                        ),
+                        1
+                    );
+
+                }
+            );
+
+        });
+
+
+    cartItemsWrap
+        .querySelectorAll("[data-qty-minus]")
+        .forEach(button => {
+
+            button.addEventListener(
+                "click",
+                () => {
+
+                    updateQty(
+                        Number(
+                            button.dataset.qtyMinus
+                        ),
+                        -1
+                    );
+
+                }
+            );
+
+        });
+
+
+    cartItemsWrap
+        .querySelectorAll("[data-remove]")
+        .forEach(button => {
+
+            button.addEventListener(
+                "click",
+                () => {
+
+                    removeFromCart(
+                        Number(
+                            button.dataset.remove
+                        )
+                    );
+
+                }
+            );
+
+        });
+
+}
+
+
+/* =========================================================
+   CARD LISTENERS
+========================================================= */
+
+function attachCardListeners() {
+
+    document
+        .querySelectorAll("[data-add-id]")
+        .forEach(button => {
+
+            button.addEventListener(
+                "click",
+                () => {
+
+                    addToCart(
+                        Number(
+                            button.dataset.addId
+                        )
+                    );
+
+                }
+            );
+
+        });
+
+}
+
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+function showToast(message) {
+
+    const toast =
+        document.createElement("div");
+
+
+    toast.className =
+        "toast-in pointer-events-auto bg-dark text-cream text-sm font-medium px-5 py-3 rounded-full shadow-2xl border border-gold/30 flex items-center gap-2 max-w-[90vw]";
+
+
+    toast.innerHTML = `
+
+        <i class="fa-solid fa-circle-check text-saffron"></i>
+
+        <span>
+            ${message}
+        </span>
+
+    `;
+
+
+    toastContainer.appendChild(toast);
+
+
+    setTimeout(() => {
+
+        toast.classList.remove(
+            "toast-in"
+        );
+
+        toast.classList.add(
+            "toast-out"
+        );
+
+
+        setTimeout(
+            () => toast.remove(),
+            260
+        );
+
+    }, 2600);
+
+}
+
+
+/* =========================================================
+   CART OPEN
+========================================================= */
+
+function openCart() {
+
+    cartOverlay.classList.remove(
+        "hidden"
+    );
+
+    cartDrawer.classList.remove(
+        "hidden"
+    );
+
+    cartDrawer.classList.add(
+        "flex",
+        "flex-col",
+        "cart-slide-in"
+    );
+
+    document.body.style.overflow =
+        "hidden";
+
+}
+
+
+/* =========================================================
+   CART CLOSE
+========================================================= */
+
+function closeCart() {
+
+    cartDrawer.classList.add(
+        "cart-slide-out"
+    );
+
+
+    setTimeout(() => {
+
+        cartDrawer.classList.add(
+            "hidden"
+        );
+
+        cartDrawer.classList.remove(
+            "flex",
+            "flex-col",
+            "cart-slide-in",
+            "cart-slide-out"
+        );
+
+        cartOverlay.classList.add(
+            "hidden"
+        );
+
+        document.body.style.overflow =
+            "";
+
+    }, 280);
+
+}
+
+
+/* =========================================================
+   EVENT LISTENERS
+========================================================= */
+
+searchInputEl.addEventListener(
+    "input",
+    e => setSearch(e.target.value)
+);
+
+
+searchInputMobileEl.addEventListener(
+    "input",
+    e => setSearch(e.target.value)
+);
+
+
+categoryTabsEl.addEventListener(
+    "click",
+    e => {
+
+        const button =
+            e.target.closest("[data-cat]");
+
+        if (!button) {
+            return;
+        }
+
+        setCategory(
+            button.dataset.cat
+        );
+
+    }
+);
+
+
+document
+    .querySelectorAll("[data-nav-filter]")
+    .forEach(link => {
+
+        link.addEventListener(
+            "click",
+            e => {
+
+                e.preventDefault();
+
+                setCategory(
+                    link.dataset.navFilter
+                );
+
+                document
+                    .getElementById("menu")
+                    .scrollIntoView({
+                        behavior: "smooth"
+                    });
+
+                mobileMenu.classList.add(
+                    "hidden"
+                );
+
+            }
+        );
+
+    });
+
+
+chefSpecialsBtn.addEventListener(
+    "click",
+    () => {
+
+        setCategory(
+            "chefs-special"
+        );
+
+        document
+            .getElementById("menu")
+            .scrollIntoView({
+                behavior: "smooth"
+            });
+
+    }
+);
+
+
+cartBtn.addEventListener(
+    "click",
+    openCart
+);
+
+
+closeCartBtn.addEventListener(
+    "click",
+    closeCart
+);
+
+
+cartOverlay.addEventListener(
+    "click",
+    closeCart
+);
+
+
+cartEmptyExploreBtn.addEventListener(
+    "click",
+    () => {
+
+        closeCart();
+
+        document
+            .getElementById("menu")
+            .scrollIntoView({
+                behavior: "smooth"
+            });
+
+    }
+);
+
+
+placeOrderBtn.addEventListener(
+    "click",
+    () => {
+
+        if (cart.length === 0) {
+
+            showToast(
+                "Your cart is empty."
+            );
+
+            return;
+
+        }
+
+
+        cart = [];
+
+        renderCart();
+
+        closeCart();
+
+        showToast(
+            "🎉 Order placed successfully!"
+        );
+
+    }
+);
+
+
+hamburgerBtn.addEventListener(
+    "click",
+    () => {
+
+        mobileMenu.classList.toggle(
+            "hidden"
+        );
+
+    }
+);
+
+
+mobileSearchBtn.addEventListener(
+    "click",
+    () => {
+
+        mobileSearchWrap.classList.toggle(
+            "hidden"
+        );
+
+
+        if (
+            !mobileSearchWrap.classList.contains(
+                "hidden"
+            )
+        ) {
+
+            searchInputMobileEl.focus();
+
+        }
+
+    }
+);
+
+
+document.addEventListener(
+    "keydown",
+    e => {
+
+        if (
+            e.key === "Escape" &&
+            !cartDrawer.classList.contains("hidden")
+        ) {
+
+            closeCart();
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   RESTAURANT INFO
+========================================================= */
+
+function populateRestaurantInfo() {
+
+    document.getElementById(
+        "contactAddress"
+    ).textContent =
+        restaurantConfig.address;
+
+
+    document.getElementById(
+        "contactPhone"
+    ).textContent =
+        restaurantConfig.phone;
+
+
+    document.getElementById(
+        "contactEmail"
+    ).textContent =
+        restaurantConfig.email;
+
+
+    document.getElementById(
+        "hoursWeekday"
+    ).textContent =
+        restaurantConfig.openingHours.weekdays;
+
+
+    document.getElementById(
+        "hoursWeekend"
+    ).textContent =
+        restaurantConfig.openingHours.weekends;
+
+}
+
+
+/* =========================================================
+   INITIALIZATION
+========================================================= */
+
+function init() {
+
+    populateRestaurantInfo();
+
+    renderCategoryTabs();
+
+    renderMenu();
+
+    renderBiryaniSection();
+
+    renderChefSpecials();
+
+    renderVegNonVeg();
+
+    renderCart();
+
+    attachCardListeners();
+
+}
+
+
+/* =========================================================
+   START
+========================================================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    init
+);
+
+</script>
+
+</body>
+</html>

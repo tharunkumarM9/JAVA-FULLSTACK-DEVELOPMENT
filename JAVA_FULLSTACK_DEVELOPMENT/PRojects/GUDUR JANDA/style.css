@@ -1,0 +1,2139 @@
+/* =========================================================
+   GUDUR JANDA PANDUGA
+   FESTIVAL INVITATION WEBSITE
+========================================================= */
+
+:root {
+    --deep-red: #420b0b;
+    --red: #721414;
+    --bright-red: #9f2424;
+    --gold: #d8a94d;
+    --light-gold: #f4d98a;
+    --cream: #fff8e7;
+    --dark: #160707;
+    --brown: #2b1008;
+    --white: #fffdf7;
+
+    --cinzel: "Cinzel", serif;
+    --playfair: "Playfair Display", serif;
+}
+
+
+/* =========================================================
+   RESET
+========================================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background: var(--deep-red);
+    color: var(--cream);
+    font-family: var(--playfair);
+    overflow-x: hidden;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+img {
+    display: block;
+    width: 100%;
+}
+
+section {
+    scroll-margin-top: 75px;
+}
+
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+.site-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 72px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 0 5%;
+
+    background: rgba(35, 4, 4, 0.92);
+    backdrop-filter: blur(12px);
+
+    border-bottom: 1px solid rgba(216, 169, 77, 0.25);
+
+    z-index: 999;
+}
+
+.nav-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    font-family: var(--cinzel);
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+
+.brand-mark {
+    font-size: 24px;
+}
+
+.nav-links {
+    display: flex;
+    gap: 25px;
+}
+
+.nav-links a {
+    font-family: var(--cinzel);
+    font-size: 11px;
+    letter-spacing: 1px;
+
+    color: #f6dfaa;
+
+    transition: 0.3s ease;
+}
+
+.nav-links a:hover {
+    color: white;
+}
+
+
+/* =========================================================
+   COMMON
+========================================================= */
+
+.festival-section {
+    position: relative;
+    min-height: 100vh;
+    overflow: hidden;
+}
+
+.section-kicker {
+    font-family: var(--cinzel);
+    color: var(--gold);
+    font-size: 12px;
+    letter-spacing: 4px;
+    font-weight: 600;
+}
+
+h2 {
+    font-family: var(--cinzel);
+    font-size: clamp(36px, 5vw, 70px);
+    line-height: 1.1;
+}
+
+h2 span {
+    display: block;
+    color: var(--light-gold);
+}
+
+.gold-rule {
+    width: 100px;
+    height: 2px;
+    background: var(--gold);
+    margin: 25px 0;
+}
+
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.hero-section {
+    min-height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    text-align: center;
+
+    background:
+        radial-gradient(circle at center, rgba(150, 35, 20, 0.45), transparent 40%),
+        linear-gradient(135deg, #260505, #650f0f 50%, #210404);
+
+    padding: 110px 20px 70px;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 5;
+    max-width: 900px;
+}
+
+.eyebrow {
+    color: var(--light-gold);
+    font-family: var(--cinzel);
+    font-size: 11px;
+    letter-spacing: 4px;
+    margin-bottom: 25px;
+}
+
+.pre-title {
+    font-family: var(--cinzel);
+    color: #e8c97d;
+    letter-spacing: 4px;
+    font-size: 13px;
+    margin-top: 25px;
+}
+
+.hero-section h1 {
+    margin-top: 12px;
+
+    font-family: var(--cinzel);
+    font-size: clamp(48px, 8vw, 105px);
+    line-height: 0.95;
+}
+
+.hero-section h1 span {
+    display: block;
+}
+
+.hero-section h1 strong {
+    display: block;
+    color: var(--light-gold);
+    font-weight: 700;
+}
+
+.hero-date {
+    margin-top: 25px;
+
+    font-family: var(--cinzel);
+    color: white;
+    font-size: 20px;
+    letter-spacing: 5px;
+}
+
+.hero-location {
+    margin-top: 8px;
+    color: #e4c77c;
+    letter-spacing: 4px;
+    font-family: var(--cinzel);
+    font-size: 12px;
+}
+
+.hero-devotion {
+    margin-top: 20px;
+    font-size: 20px;
+    font-style: italic;
+}
+
+.hero-tagline {
+    margin-top: 10px;
+    color: #e7ca87;
+}
+
+.ornament-divider {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    margin: 25px auto;
+    color: var(--gold);
+}
+
+.ornament-divider i {
+    width: 65px;
+    height: 1px;
+    background: var(--gold);
+}
+
+
+/* =========================================================
+   HERO FLAG
+========================================================= */
+
+.hero-flag {
+    position: relative;
+    width: 180px;
+    height: 170px;
+    margin: 5px auto 0;
+}
+
+.hero-flag-finial {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+
+    color: var(--light-gold);
+    font-size: 30px;
+}
+
+.hero-flag-pole {
+    position: absolute;
+    width: 8px;
+    height: 120px;
+
+    left: 50%;
+    top: 35px;
+
+    transform: translateX(-50%);
+
+    background: linear-gradient(
+        90deg,
+        #805c20,
+        #f2d27c,
+        #8b611f
+    );
+
+    border-radius: 10px;
+}
+
+.hero-pole-shine {
+    position: absolute;
+    width: 2px;
+    height: 100%;
+    left: 2px;
+    background: rgba(255,255,255,0.5);
+}
+
+.hero-flag-cloth {
+    position: absolute;
+
+    top: 40px;
+    left: calc(50% + 5px);
+
+    width: 100px;
+    height: 62px;
+
+    background:
+        linear-gradient(135deg, #e2bd4d, #a96b15);
+
+    clip-path: polygon(
+        0 0,
+        100% 0,
+        88% 100%,
+        0 85%
+    );
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    color: #66100d;
+    font-size: 30px;
+    font-weight: bold;
+
+    box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+}
+
+.hero-flag-tassels {
+    position: absolute;
+    top: 100px;
+    left: calc(50% + 20px);
+
+    display: flex;
+    gap: 6px;
+}
+
+.hero-flag-tassels span {
+    width: 7px;
+    height: 25px;
+    background: var(--gold);
+    border-radius: 0 0 10px 10px;
+}
+
+.hero-flag-base {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+
+    width: 90px;
+    height: 12px;
+
+    background: linear-gradient(
+        to right,
+        #6e4b16,
+        #e4c25e,
+        #6e4b16
+    );
+
+    border-radius: 20px;
+}
+
+
+/* =========================================================
+   INVITED SEAL
+========================================================= */
+
+.invited-seal {
+    width: 105px;
+    height: 105px;
+
+    margin: 25px auto 0;
+
+    border: 1px solid var(--gold);
+    border-radius: 50%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    background: rgba(100, 20, 10, 0.55);
+
+    box-shadow:
+        0 0 0 5px rgba(216, 169, 77, 0.1),
+        0 0 30px rgba(216, 169, 77, 0.25);
+}
+
+.invited-seal span {
+    font-family: var(--cinzel);
+    font-size: 9px;
+    letter-spacing: 2px;
+}
+
+.invited-seal strong {
+    color: var(--light-gold);
+    font-family: var(--cinzel);
+    font-size: 16px;
+    margin-top: 4px;
+}
+
+
+/* =========================================================
+   MANDALA
+========================================================= */
+
+.mandala {
+    position: absolute;
+    width: 400px;
+    height: 400px;
+
+    border: 1px solid rgba(216,169,77,0.15);
+    border-radius: 50%;
+}
+
+.mandala::before,
+.mandala::after {
+    content: "";
+    position: absolute;
+    inset: 30px;
+
+    border: 1px solid rgba(216,169,77,0.1);
+    border-radius: 50%;
+}
+
+.mandala-one {
+    left: -180px;
+    top: 30%;
+}
+
+.mandala-two {
+    right: -180px;
+    bottom: 10%;
+}
+
+
+/* =========================================================
+   DIYAS
+========================================================= */
+
+.diya {
+    position: absolute;
+    width: 60px;
+    height: 27px;
+
+    background: linear-gradient(
+        to bottom,
+        #dba846,
+        #6d2d12
+    );
+
+    border-radius: 50% 50% 45% 45%;
+}
+
+.diya span {
+    position: absolute;
+
+    width: 15px;
+    height: 25px;
+
+    background: #ffd76a;
+
+    border-radius: 50% 50% 40% 40%;
+
+    left: 50%;
+    top: -18px;
+
+    transform: translateX(-50%);
+
+    box-shadow: 0 0 25px #ffb000;
+}
+
+.hero-diyas .diya-left {
+    bottom: 50px;
+    left: 8%;
+}
+
+.hero-diyas .diya-right {
+    bottom: 50px;
+    right: 8%;
+}
+
+
+/* =========================================================
+   SCROLL CUE
+========================================================= */
+
+.scroll-cue {
+    position: absolute;
+    bottom: 25px;
+    left: 50%;
+    transform: translateX(-50%);
+
+    font-family: var(--cinzel);
+    font-size: 9px;
+    letter-spacing: 3px;
+    color: #d9bc72;
+}
+
+.scroll-cue i {
+    display: block;
+    width: 1px;
+    height: 35px;
+
+    background: var(--gold);
+
+    margin: 8px auto 0;
+}
+
+
+/* =========================================================
+   INVITATION
+========================================================= */
+
+.invitation-section {
+    padding: 110px 7%;
+
+    background:
+        radial-gradient(circle at 80% 30%, rgba(172, 65, 20, 0.25), transparent 35%),
+        #f8eed7;
+
+    color: #34120c;
+
+    display: flex;
+    align-items: center;
+}
+
+.invitation-card {
+    width: 100%;
+    max-width: 1200px;
+    margin: auto;
+
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 70px;
+    align-items: center;
+}
+
+.invitation-copy h2 {
+    color: #54110d;
+}
+
+.invitation-copy h2 span {
+    color: #a65e18;
+}
+
+.body-copy {
+    max-width: 650px;
+    line-height: 1.9;
+    margin-bottom: 18px;
+    font-size: 17px;
+}
+
+blockquote {
+    margin: 25px 0;
+
+    border-left: 3px solid #c18a30;
+    padding-left: 25px;
+
+    font-size: 25px;
+    font-style: italic;
+    color: #76200f;
+}
+
+blockquote span {
+    color: #bd8529;
+    font-size: 40px;
+}
+
+.mini-details {
+    display: flex;
+    gap: 30px;
+    margin-top: 35px;
+    flex-wrap: wrap;
+}
+
+.mini-details div {
+    border-top: 1px solid #c79c58;
+    padding-top: 10px;
+    min-width: 120px;
+}
+
+.mini-details span {
+    display: block;
+    font-family: var(--cinzel);
+    font-size: 9px;
+    letter-spacing: 2px;
+    color: #8c5b25;
+}
+
+.mini-details strong {
+    font-family: var(--cinzel);
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   HANUMAN FRAME
+========================================================= */
+
+.hanuman-frame {
+    position: relative;
+
+    max-width: 430px;
+    width: 100%;
+    height: 560px;
+
+    padding: 18px;
+
+    border: 1px solid #b88330;
+    margin: auto;
+}
+
+.image-placeholder {
+    position: relative;
+    width: 100%;
+    height: 100%;
+
+    overflow: hidden;
+
+    background:
+        radial-gradient(circle at center, #a94a1a, #54100b 65%, #250706);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.halo {
+    position: absolute;
+
+    width: 270px;
+    height: 270px;
+
+    border-radius: 50%;
+
+    background: radial-gradient(
+        circle,
+        rgba(246, 210, 105, 0.65),
+        transparent 65%
+    );
+}
+
+.temple-silhouette {
+    position: absolute;
+    bottom: 0;
+
+    width: 85%;
+    height: 45%;
+}
+
+.temple-dome {
+    position: absolute;
+    top: 0;
+    left: 25%;
+
+    width: 50%;
+    height: 45%;
+
+    background: #210606;
+
+    border-radius: 50% 50% 0 0;
+}
+
+.temple-body {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 65%;
+
+    background: #210606;
+}
+
+.temple-door {
+    position: absolute;
+    bottom: 0;
+    left: 40%;
+
+    width: 20%;
+    height: 50%;
+
+    background: #090303;
+    border-radius: 50% 50% 0 0;
+}
+
+.devotional-symbol {
+    position: absolute;
+
+    top: 25%;
+
+    color: #f6d477;
+    font-size: 75px;
+}
+
+.hanuman-caption {
+    position: absolute;
+    bottom: 30px;
+
+    text-align: center;
+
+    font-family: var(--cinzel);
+}
+
+.hanuman-caption span {
+    display: block;
+    font-size: 10px;
+    letter-spacing: 4px;
+}
+
+.hanuman-caption strong {
+    display: block;
+    color: var(--light-gold);
+    font-size: 25px;
+}
+
+.hanuman-caption small {
+    letter-spacing: 3px;
+    color: #e7c77b;
+}
+
+.frame-corner {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    border-color: #d3a047;
+}
+
+.corner-tl {
+    top: -1px;
+    left: -1px;
+    border-top: 3px solid;
+    border-left: 3px solid;
+}
+
+.corner-tr {
+    top: -1px;
+    right: -1px;
+    border-top: 3px solid;
+    border-right: 3px solid;
+}
+
+.corner-bl {
+    bottom: -1px;
+    left: -1px;
+    border-bottom: 3px solid;
+    border-left: 3px solid;
+}
+
+.corner-br {
+    bottom: -1px;
+    right: -1px;
+    border-bottom: 3px solid;
+    border-right: 3px solid;
+}
+
+
+/* =========================================================
+   JANDA SECTION
+========================================================= */
+
+.janda-section {
+    padding: 110px 5% 80px;
+
+    background:
+        radial-gradient(circle at center, rgba(155, 40, 15, 0.4), transparent 40%),
+        #350908;
+
+    text-align: center;
+}
+
+.janda-heading {
+    position: relative;
+    z-index: 3;
+}
+
+.section-subtitle {
+    margin-top: 15px;
+    letter-spacing: 5px;
+    color: #d5ad5d;
+    font-family: var(--cinzel);
+    font-size: 11px;
+}
+
+.janda-stage {
+    position: relative;
+
+    max-width: 1100px;
+    min-height: 570px;
+
+    margin: 50px auto;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.janda-side-copy {
+    position: absolute;
+    width: 220px;
+
+    text-align: left;
+}
+
+.janda-copy-left {
+    left: 0;
+}
+
+.janda-copy-right {
+    right: 0;
+}
+
+.vertical-label {
+    font-family: var(--cinzel);
+    color: var(--gold);
+    letter-spacing: 3px;
+    font-size: 11px;
+}
+
+.copy-line {
+    width: 70px;
+    height: 1px;
+    background: var(--gold);
+    margin: 15px 0;
+}
+
+.janda-side-copy p {
+    color: #e4cba0;
+    line-height: 1.7;
+    font-size: 15px;
+}
+
+
+/* =========================================================
+   SACRED FLAG
+========================================================= */
+
+.sacred-flag {
+    position: relative;
+
+    width: 300px;
+    height: 560px;
+
+    margin: auto;
+}
+
+.flag-finial {
+    position: absolute;
+
+    top: 0;
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    font-size: 35px;
+    color: var(--light-gold);
+}
+
+.flag-pole {
+    position: absolute;
+
+    top: 35px;
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    width: 12px;
+    height: 420px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #744817,
+            #f5d477,
+            #8b5c1d
+        );
+
+    border-radius: 10px;
+}
+
+.pole-highlight {
+    width: 3px;
+    height: 100%;
+
+    background: rgba(255,255,255,0.5);
+
+    margin-left: 2px;
+}
+
+.flag-cloth-main {
+    position: absolute;
+
+    top: 55px;
+    left: calc(50% + 7px);
+
+    width: 175px;
+    height: 115px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #efca63,
+            #a76815
+        );
+
+    clip-path: polygon(
+        0 0,
+        100% 0,
+        87% 100%,
+        0 82%
+    );
+
+    box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+}
+
+.flag-pattern {
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    color: #71120c;
+}
+
+.flag-pattern span {
+    font-size: 40px;
+}
+
+.flag-pattern small {
+    font-size: 12px;
+}
+
+.flag-pattern strong {
+    font-size: 14px;
+}
+
+.flag-tassels {
+    position: absolute;
+
+    top: 150px;
+    left: calc(50% + 25px);
+
+    display: flex;
+    gap: 8px;
+}
+
+.flag-tassels span {
+    width: 9px;
+    height: 45px;
+
+    background: var(--gold);
+
+    border-radius: 0 0 12px 12px;
+}
+
+.janda-base {
+    position: absolute;
+
+    bottom: 70px;
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    width: 170px;
+    height: 48px;
+
+    border: 1px solid var(--gold);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 15px;
+
+    font-family: var(--cinzel);
+    color: var(--light-gold);
+}
+
+.janda-base strong {
+    letter-spacing: 4px;
+}
+
+.base-diyas {
+    position: absolute;
+
+    bottom: 25px;
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    display: flex;
+    gap: 25px;
+}
+
+.diya.small {
+    position: relative;
+
+    width: 38px;
+    height: 18px;
+}
+
+.diya.small span {
+    width: 9px;
+    height: 15px;
+    top: -10px;
+}
+
+.janda-flow {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    gap: 15px;
+
+    font-family: var(--cinzel);
+    letter-spacing: 3px;
+    color: #e0bc70;
+}
+
+.janda-flow strong {
+    color: white;
+}
+
+.janda-flow i {
+    width: 45px;
+    height: 1px;
+    background: var(--gold);
+}
+
+.janda-description {
+    max-width: 750px;
+
+    margin: 30px auto 0;
+
+    color: #e4cba0;
+    line-height: 1.8;
+}
+
+
+/* =========================================================
+   STREETS
+========================================================= */
+
+.streets-section {
+    padding: 100px 5%;
+
+    background:
+        radial-gradient(circle at center, #722313, transparent 50%),
+        #220807;
+
+    text-align: center;
+}
+
+.streets-header {
+    position: relative;
+    z-index: 5;
+}
+
+.streets-header h2 {
+    margin: 15px 0;
+}
+
+.streets-header > p:last-child {
+    color: #e0c68d;
+}
+
+.festival-street-scene {
+    position: relative;
+
+    max-width: 1050px;
+    height: 650px;
+
+    margin: 50px auto;
+
+    border: 1px solid rgba(214,169,77,0.35);
+
+    background:
+        radial-gradient(circle, rgba(191, 75, 20, 0.35), transparent 35%),
+        #310b09;
+}
+
+.street-center {
+    position: absolute;
+
+    top: 50%;
+    left: 50%;
+
+    transform: translate(-50%, -50%);
+
+    z-index: 4;
+}
+
+.center-halo {
+    position: absolute;
+
+    width: 300px;
+    height: 300px;
+
+    left: 50%;
+    top: 50%;
+
+    transform: translate(-50%, -50%);
+
+    border-radius: 50%;
+
+    background: radial-gradient(
+        circle,
+        rgba(228,184,79,0.25),
+        transparent 65%
+    );
+}
+
+.center-flag {
+    position: relative;
+
+    font-size: 65px;
+
+    filter: drop-shadow(0 0 20px rgba(240,190,70,0.5));
+}
+
+.center-title {
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+
+    font-family: var(--cinzel);
+}
+
+.center-title small {
+    color: #d7b15f;
+    font-size: 9px;
+    letter-spacing: 3px;
+}
+
+.center-title strong {
+    font-size: 23px;
+    color: #fff1c5;
+}
+
+.center-ornament {
+    color: var(--gold);
+    margin-top: 10px;
+}
+
+.street-area {
+    position: absolute;
+
+    width: 180px;
+
+    padding: 15px;
+
+    border: 1px solid rgba(215,170,77,0.35);
+
+    background: rgba(35, 5, 4, 0.75);
+
+    transition: 0.3s;
+}
+
+.street-area:hover {
+    transform: scale(1.05);
+    border-color: var(--gold);
+}
+
+.street-area strong {
+    display: block;
+
+    font-family: var(--cinzel);
+    color: #f3d27d;
+    font-size: 13px;
+}
+
+.street-area small {
+    display: block;
+
+    margin-top: 6px;
+
+    color: #d7c19a;
+    font-size: 9px;
+    letter-spacing: 1px;
+}
+
+.street-dot {
+    display: block;
+
+    width: 9px;
+    height: 9px;
+
+    background: var(--gold);
+
+    border-radius: 50%;
+
+    margin: 0 auto 8px;
+
+    box-shadow: 0 0 15px var(--gold);
+}
+
+.area-thurpu {
+    top: 10%;
+    left: 8%;
+}
+
+.area-clock {
+    top: 10%;
+    right: 8%;
+}
+
+.area-raja {
+    top: 42%;
+    left: 4%;
+}
+
+.area-sadhu {
+    top: 42%;
+    right: 4%;
+}
+
+.area-shiva {
+    bottom: 10%;
+    left: 15%;
+}
+
+.area-konetimitta {
+    bottom: 10%;
+    right: 15%;
+}
+
+.decorative-string-lights {
+    position: absolute;
+
+    display: flex;
+    gap: 22px;
+
+    top: 25px;
+}
+
+.decorative-string-lights span {
+    width: 8px;
+    height: 8px;
+
+    border-radius: 50%;
+
+    background: #ffd75b;
+
+    box-shadow: 0 0 15px #ffd75b;
+}
+
+.lights-left {
+    left: 50px;
+}
+
+.lights-right {
+    right: 50px;
+}
+
+.street-diya {
+    position: absolute;
+
+    width: 35px;
+    height: 15px;
+
+    background: #a45d24;
+    border-radius: 50%;
+}
+
+.street-diya span {
+    position: absolute;
+
+    width: 8px;
+    height: 13px;
+
+    background: #ffd861;
+
+    border-radius: 50%;
+
+    top: -9px;
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    box-shadow: 0 0 15px #ffb000;
+}
+
+.diya-one {
+    left: 20px;
+    bottom: 30px;
+}
+
+.diya-two {
+    left: 50%;
+    bottom: 20px;
+}
+
+.diya-three {
+    right: 20px;
+    bottom: 30px;
+}
+
+.diya-four {
+    top: 50%;
+    left: 50%;
+}
+
+.streets-footer {
+    font-family: var(--cinzel);
+    letter-spacing: 3px;
+    color: #d5ae62;
+}
+
+.streets-footer span {
+    margin: 0 10px;
+}
+
+
+/* =========================================================
+   FESTIVAL NIGHT
+========================================================= */
+
+.festival-night-section {
+    padding: 120px 7%;
+
+    background:
+        radial-gradient(circle at 50% 15%, #64200f, transparent 35%),
+        linear-gradient(180deg, #15050b, #30080b);
+
+    color: #fff7df;
+}
+
+.festival-header {
+    text-align: center;
+}
+
+.festival-header > p:last-child {
+    color: #d8c08c;
+    margin-top: 15px;
+}
+
+.festival-timeline {
+    position: relative;
+
+    max-width: 950px;
+
+    margin: 70px auto 0;
+
+    padding: 20px 0;
+}
+
+.timeline-line {
+    position: absolute;
+
+    left: 50%;
+    top: 0;
+    bottom: 0;
+
+    width: 2px;
+
+    background: rgba(215,170,75,0.35);
+
+    transform: translateX(-50%);
+}
+
+.timeline-line span {
+    position: absolute;
+
+    top: 0;
+    left: 50%;
+
+    width: 12px;
+    height: 12px;
+
+    background: var(--gold);
+
+    border-radius: 50%;
+
+    transform: translateX(-50%);
+
+    box-shadow: 0 0 20px var(--gold);
+}
+
+.festival-moment {
+    position: relative;
+
+    width: 46%;
+
+    margin-bottom: 55px;
+
+    padding: 25px;
+
+    background: rgba(91, 25, 14, 0.55);
+
+    border: 1px solid rgba(216,169,77,0.25);
+
+    backdrop-filter: blur(5px);
+}
+
+.moment-one,
+.moment-three,
+.moment-five {
+    margin-right: auto;
+}
+
+.moment-two,
+.moment-four {
+    margin-left: auto;
+}
+
+.moment-icon {
+    color: var(--gold);
+    font-size: 24px;
+}
+
+.moment-time {
+    font-family: var(--cinzel);
+    font-size: 12px;
+    color: #d2a95d;
+    letter-spacing: 3px;
+    margin: 8px 0;
+}
+
+.moment-content > span {
+    color: #d4ae63;
+    font-family: var(--cinzel);
+    font-size: 9px;
+    letter-spacing: 3px;
+}
+
+.moment-content h3 {
+    font-family: var(--cinzel);
+    color: #fff0c3;
+    font-size: 22px;
+    margin: 8px 0;
+}
+
+.moment-content p {
+    color: #d9c6a2;
+    line-height: 1.7;
+}
+
+.star-field {
+    position: absolute;
+    inset: 70px 5% auto;
+
+    display: flex;
+    justify-content: space-around;
+
+    color: #d8b45f;
+    opacity: 0.45;
+}
+
+.night-lights {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 50px;
+}
+
+.night-lights span {
+    width: 8px;
+    height: 8px;
+
+    border-radius: 50%;
+
+    background: #ffd76b;
+
+    box-shadow: 0 0 15px #ffd76b;
+}
+
+
+/* =========================================================
+   GALLERY
+========================================================= */
+
+.gallery-section {
+    padding: 110px 6%;
+
+    background: #f8eed9;
+
+    color: #38100b;
+}
+
+.gallery-header {
+    text-align: center;
+}
+
+.gallery-header > p:last-child {
+    margin-top: 15px;
+    color: #795b35;
+}
+
+.gallery-grid {
+    max-width: 1150px;
+
+    margin: 55px auto;
+
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+
+    gap: 25px;
+}
+
+.gallery-card {
+    position: relative;
+
+    height: 350px;
+
+    overflow: hidden;
+
+    border: 8px solid #fff7e6;
+
+    box-shadow: 0 15px 35px rgba(63, 23, 8, 0.18);
+}
+
+.gallery-card img {
+    height: 100%;
+    object-fit: cover;
+
+    transition: transform 0.6s ease;
+}
+
+.gallery-card:hover img {
+    transform: scale(1.08);
+}
+
+.gallery-overlay {
+    position: absolute;
+
+    inset: auto 0 0;
+
+    padding: 25px;
+
+    background: linear-gradient(
+        transparent,
+        rgba(25,5,3,0.9)
+    );
+
+    color: white;
+}
+
+.gallery-overlay span {
+    color: #e6c26d;
+    font-family: var(--cinzel);
+    font-size: 11px;
+}
+
+.gallery-overlay h3 {
+    font-family: var(--cinzel);
+    margin-top: 5px;
+    font-size: 20px;
+}
+
+.gallery-note {
+    text-align: center;
+
+    font-family: var(--cinzel);
+
+    color: #966925;
+
+    letter-spacing: 2px;
+    font-size: 11px;
+}
+
+.gallery-note span {
+    color: #bd8227;
+    margin: 0 15px;
+}
+
+
+/* =========================================================
+   FINAL
+========================================================= */
+
+.final-section {
+    min-height: 100vh;
+
+    padding: 110px 7%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    text-align: center;
+
+    background:
+        radial-gradient(circle at center, rgba(155,42,16,0.5), transparent 45%),
+        #2b0707;
+}
+
+.final-content {
+    max-width: 850px;
+}
+
+.final-top-ornament {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+
+    color: var(--gold);
+}
+
+.final-top-ornament i {
+    width: 70px;
+    height: 1px;
+    background: var(--gold);
+}
+
+.final-kicker {
+    margin-top: 30px;
+
+    color: #d4ad61;
+
+    font-family: var(--cinzel);
+    font-size: 11px;
+    letter-spacing: 4px;
+}
+
+.final-content h2 {
+    margin-top: 25px;
+
+    color: #f4d277;
+
+    font-size: clamp(45px, 7vw, 90px);
+}
+
+.final-symbol {
+    margin: 20px 0;
+
+    color: #f5d47b;
+
+    font-size: 60px;
+}
+
+.final-content h3 {
+    font-family: var(--cinzel);
+    font-size: 22px;
+    line-height: 1.6;
+}
+
+.final-content h3 span {
+    display: block;
+    color: #e5bd69;
+}
+
+.final-message {
+    max-width: 650px;
+
+    margin: 25px auto;
+
+    color: #dbc8a4;
+
+    line-height: 1.8;
+    font-size: 17px;
+}
+
+.final-date {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    gap: 15px;
+
+    margin: 30px 0;
+
+    font-family: var(--cinzel);
+    color: #f2d27a;
+    letter-spacing: 2px;
+}
+
+.festival-details {
+    max-width: 650px;
+
+    margin: 30px auto;
+
+    border-top: 1px solid rgba(214,169,77,0.3);
+}
+
+.detail-row {
+    display: flex;
+    justify-content: space-between;
+
+    padding: 14px 0;
+
+    border-bottom: 1px solid rgba(214,169,77,0.2);
+}
+
+.detail-row span {
+    color: #bd9854;
+
+    font-family: var(--cinzel);
+    font-size: 10px;
+    letter-spacing: 2px;
+}
+
+.detail-row strong {
+    color: #f2dfb1;
+}
+
+.location-panel {
+    max-width: 700px;
+
+    margin: 35px auto;
+
+    padding: 20px;
+
+    display: flex;
+    align-items: center;
+    gap: 20px;
+
+    border: 1px solid rgba(214,169,77,0.35);
+
+    background: rgba(85,20,10,0.5);
+
+    text-align: left;
+}
+
+.location-icon {
+    font-size: 30px;
+    color: var(--gold);
+}
+
+.location-panel div:nth-child(2) {
+    flex: 1;
+}
+
+.location-panel span {
+    display: block;
+
+    font-family: var(--cinzel);
+    font-size: 9px;
+    color: #b99450;
+    letter-spacing: 2px;
+}
+
+.location-panel strong {
+    display: block;
+
+    margin-top: 5px;
+
+    color: #f4dfaa;
+    font-family: var(--cinzel);
+    font-size: 12px;
+}
+
+.direction-btn {
+    padding: 12px 18px;
+
+    background: var(--gold);
+
+    color: #2b0905;
+
+    font-family: var(--cinzel);
+
+    font-size: 10px;
+    font-weight: bold;
+
+    transition: 0.3s;
+}
+
+.direction-btn:hover {
+    background: #f2d47f;
+    transform: translateY(-2px);
+}
+
+.final-diyas {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+
+    margin: 40px 0 25px;
+}
+
+.final-diya {
+    position: relative;
+
+    width: 45px;
+    height: 20px;
+
+    background: #a25b20;
+
+    border-radius: 50%;
+}
+
+.final-diya span {
+    position: absolute;
+
+    width: 10px;
+    height: 18px;
+
+    top: -12px;
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    border-radius: 50%;
+
+    background: #ffd761;
+
+    box-shadow: 0 0 20px #ffb000;
+}
+
+.closing-line {
+    color: #c9a65c;
+
+    font-family: var(--cinzel);
+
+    font-size: 10px;
+    letter-spacing: 4px;
+}
+
+.closing-title {
+    margin-top: 12px;
+
+    font-family: var(--cinzel);
+
+    color: #f3d681;
+
+    font-size: 20px;
+    letter-spacing: 3px;
+}
+
+.closing-jai {
+    margin-top: 15px;
+
+    color: white;
+
+    font-family: var(--cinzel);
+
+    font-size: 18px;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 900px) {
+
+    .site-nav {
+        padding: 0 20px;
+    }
+
+    .nav-links {
+        gap: 12px;
+    }
+
+    .nav-links a {
+        font-size: 9px;
+    }
+
+    .invitation-card {
+        grid-template-columns: 1fr;
+    }
+
+    .invitation-copy {
+        text-align: center;
+    }
+
+    .gold-rule {
+        margin: 25px auto;
+    }
+
+    .body-copy {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .mini-details {
+        justify-content: center;
+    }
+
+    .janda-stage {
+        min-height: 800px;
+    }
+
+    .janda-side-copy {
+        position: relative;
+        width: 45%;
+        left: auto;
+        right: auto;
+    }
+
+    .janda-stage {
+        flex-wrap: wrap;
+    }
+
+    .sacred-flag {
+        order: -1;
+        width: 280px;
+    }
+
+    .street-area {
+        width: 150px;
+    }
+
+    .festival-moment {
+        width: 43%;
+    }
+}
+
+
+@media (max-width: 650px) {
+
+    .site-nav {
+        height: auto;
+        min-height: 65px;
+        padding: 12px 15px;
+
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .nav-links {
+        width: 100%;
+
+        overflow-x: auto;
+
+        justify-content: flex-start;
+
+        padding-bottom: 4px;
+    }
+
+    .nav-links a {
+        white-space: nowrap;
+    }
+
+    section {
+        scroll-margin-top: 110px;
+    }
+
+    .hero-section {
+        padding-top: 145px;
+    }
+
+    .hero-section h1 {
+        font-size: 43px;
+    }
+
+    .hero-date {
+        font-size: 15px;
+        letter-spacing: 3px;
+    }
+
+    .hero-devotion {
+        font-size: 16px;
+    }
+
+    .hero-diyas .diya-left {
+        left: 3%;
+    }
+
+    .hero-diyas .diya-right {
+        right: 3%;
+    }
+
+    .invitation-section,
+    .janda-section,
+    .streets-section,
+    .festival-night-section,
+    .gallery-section,
+    .final-section {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    .hanuman-frame {
+        height: 450px;
+    }
+
+    .janda-stage {
+        min-height: auto;
+
+        flex-direction: column;
+
+        gap: 35px;
+    }
+
+    .janda-side-copy {
+        width: 100%;
+        max-width: 400px;
+        text-align: center;
+    }
+
+    .copy-line {
+        margin: 12px auto;
+    }
+
+    .sacred-flag {
+        order: 0;
+    }
+
+    .festival-street-scene {
+        height: 800px;
+    }
+
+    .street-area {
+        width: 135px;
+        padding: 10px;
+    }
+
+    .street-area strong {
+        font-size: 10px;
+    }
+
+    .street-area small {
+        font-size: 7px;
+    }
+
+    .area-thurpu {
+        top: 7%;
+        left: 3%;
+    }
+
+    .area-clock {
+        top: 7%;
+        right: 3%;
+    }
+
+    .area-raja {
+        top: 30%;
+        left: 2%;
+    }
+
+    .area-sadhu {
+        top: 30%;
+        right: 2%;
+    }
+
+    .area-shiva {
+        bottom: 7%;
+        left: 3%;
+    }
+
+    .area-konetimitta {
+        bottom: 7%;
+        right: 3%;
+    }
+
+    .street-center {
+        top: 54%;
+    }
+
+    .timeline-line {
+        left: 10px;
+    }
+
+    .timeline-line span {
+        left: 10px;
+    }
+
+    .festival-moment {
+        width: calc(100% - 35px);
+
+        margin-left: 35px !important;
+        margin-right: 0 !important;
+    }
+
+    .gallery-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .gallery-card {
+        height: 300px;
+    }
+
+    .detail-row {
+        flex-direction: column;
+        gap: 5px;
+        text-align: left;
+    }
+
+    .location-panel {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .location-panel div:nth-child(2) {
+        flex: none;
+    }
+
+    .final-date {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .final-date span {
+        display: none;
+    }
+
+    .direction-btn {
+        width: 100%;
+        text-align: center;
+    }
+}
+
+
+/* =========================================================
+   SMALL PHONE
+========================================================= */
+
+@media (max-width: 400px) {
+
+    .hero-section h1 {
+        font-size: 36px;
+    }
+
+    .hero-flag {
+        transform: scale(0.85);
+    }
+
+    .festival-street-scene {
+        height: 850px;
+    }
+
+    .street-area {
+        width: 120px;
+    }
+
+    .street-center {
+        transform: translate(-50%, -50%) scale(0.85);
+    }
+
+    .sacred-flag {
+        transform: scale(0.85);
+    }
+
+    .closing-title {
+        font-size: 15px;
+    }
+}

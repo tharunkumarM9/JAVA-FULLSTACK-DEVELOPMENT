@@ -1,0 +1,1288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Neon Tic-Tac-Toe</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        /* ================================
+           CUSTOM ANIMATIONS
+        ================================= */
+
+        @keyframes popIn {
+            0% {
+                transform: scale(0.4);
+                opacity: 0;
+            }
+
+            70% {
+                transform: scale(1.15);
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% {
+                box-shadow: 0 0 15px rgba(99, 102, 241, 0.25);
+            }
+
+            50% {
+                box-shadow: 0 0 30px rgba(99, 102, 241, 0.55);
+            }
+        }
+
+        @keyframes winningCell {
+            0%, 100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.08);
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes confettiFall {
+            0% {
+                transform: translateY(-20px) rotate(0deg);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(100vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        .pop-in {
+            animation: popIn 0.25s ease-out;
+        }
+
+        .winning-cell {
+            animation: winningCell 0.8s ease-in-out infinite;
+        }
+
+        .slide-up {
+            animation: slideUp 0.4s ease-out;
+        }
+
+        .glass {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+        }
+
+        .board-cell {
+            min-width: 64px;
+            min-height: 64px;
+        }
+
+        /* Hide scrollbar */
+        body::-webkit-scrollbar {
+            width: 0;
+        }
+
+        /* Confetti */
+        .confetti {
+            position: fixed;
+            top: -20px;
+            width: 9px;
+            height: 14px;
+            z-index: 100;
+            pointer-events: none;
+            animation: confettiFall linear forwards;
+        }
+    </style>
+</head>
+
+<body class="min-h-screen bg-slate-950 text-white">
+
+<div class="min-h-screen relative overflow-hidden">
+
+    <!-- Background gradients -->
+    <div class="absolute inset-0 pointer-events-none">
+        <div class="absolute -top-32 -left-32 w-96 h-96 bg-indigo-600/20 rounded-full blur-3xl"></div>
+        <div class="absolute top-1/3 -right-32 w-96 h-96 bg-pink-600/20 rounded-full blur-3xl"></div>
+        <div class="absolute -bottom-40 left-1/3 w-96 h-96 bg-violet-600/20 rounded-full blur-3xl"></div>
+    </div>
+
+    <!-- Main -->
+    <main class="relative z-10 max-w-5xl mx-auto px-4 py-6 sm:py-10">
+
+        <!-- Header -->
+        <header class="text-center mb-7">
+
+            <div class="inline-flex items-center gap-2
+                        px-4 py-2 rounded-full
+                        glass text-sm text-slate-300 mb-4">
+
+                <i data-lucide="gamepad-2" class="w-4 h-4 text-indigo-400"></i>
+
+                Interactive Game
+            </div>
+
+            <h1 class="text-4xl sm:text-5xl font-black tracking-tight">
+                Tic<span class="text-indigo-400">-</span>Tac<span class="text-pink-400">-</span>Toe
+            </h1>
+
+            <p class="text-slate-400 mt-2">
+                Classic strategy. Modern experience.
+            </p>
+
+        </header>
+
+
+        <!-- Game Mode -->
+        <section class="glass rounded-2xl p-3 mb-5">
+
+            <div class="grid grid-cols-2 gap-2">
+
+                <button
+                    id="pvpBtn"
+                    class="mode-btn rounded-xl px-4 py-3 min-h-[48px]
+                           bg-indigo-600 text-white font-semibold
+                           transition hover:scale-[1.02]">
+
+                    <span class="flex items-center justify-center gap-2">
+                        <i data-lucide="users" class="w-5 h-5"></i>
+                        Player vs Player
+                    </span>
+
+                </button>
+
+                <button
+                    id="aiBtn"
+                    class="mode-btn rounded-xl px-4 py-3 min-h-[48px]
+                           bg-white/5 text-slate-300 font-semibold
+                           transition hover:bg-white/10">
+
+                    <span class="flex items-center justify-center gap-2">
+                        <i data-lucide="bot" class="w-5 h-5"></i>
+                        Player vs COMPUTER
+                    </span>
+
+                </button>
+
+            </div>
+
+
+            <!-- Difficulty -->
+            <div id="difficultyContainer" class="hidden mt-3">
+
+                <label class="block text-xs uppercase tracking-wider
+                              text-slate-500 mb-2 text-center">
+                    COMPUTER Difficulty
+                </label>
+
+                <div class="flex justify-center gap-2">
+
+                    <button
+                        data-difficulty="easy"
+                        class="difficulty-btn px-5 py-2 rounded-lg
+                               min-h-[48px] bg-indigo-600 text-sm font-medium">
+                        Easy
+                    </button>
+
+                    <button
+                        data-difficulty="hard"
+                        class="difficulty-btn px-5 py-2 rounded-lg
+                               min-h-[48px] bg-white/5 text-sm font-medium">
+                        Hard
+                    </button>
+
+                </div>
+            </div>
+
+        </section>
+
+
+        <!-- Scoreboard -->
+        <section class="grid grid-cols-3 gap-2 sm:gap-4 mb-6">
+
+            <!-- X -->
+            <div class="glass rounded-2xl p-4 text-center">
+
+                <div class="text-xs uppercase tracking-widest
+                            text-slate-500 mb-1">
+                    Player X
+                </div>
+
+                <div id="scoreX"
+                     class="text-3xl sm:text-4xl font-black
+                            text-indigo-400">
+                    0
+                </div>
+
+            </div>
+
+
+            <!-- Ties -->
+            <div class="glass rounded-2xl p-4 text-center">
+
+                <div class="text-xs uppercase tracking-widest
+                            text-slate-500 mb-1">
+                    Ties
+                </div>
+
+                <div id="scoreTie"
+                     class="text-3xl sm:text-4xl font-black text-slate-300">
+                    0
+                </div>
+
+            </div>
+
+
+            <!-- O -->
+            <div class="glass rounded-2xl p-4 text-center">
+
+                <div class="text-xs uppercase tracking-widest
+                            text-slate-500 mb-1">
+                    Player O
+                </div>
+
+                <div id="scoreO"
+                     class="text-3xl sm:text-4xl font-black text-pink-400">
+                    0
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- Game Card -->
+        <section class="max-w-md mx-auto">
+
+            <!-- Turn Indicator -->
+            <div
+                id="turnIndicator"
+                class="glass rounded-2xl px-5 py-4 mb-4
+                       flex items-center justify-center gap-3
+                       animate-pulse">
+
+                <div
+                    id="turnIcon"
+                    class="w-10 h-10 rounded-full
+                           bg-indigo-500/20
+                           flex items-center justify-center">
+
+                    <span class="font-black text-indigo-400">X</span>
+
+                </div>
+
+                <div>
+                    <p class="text-xs text-slate-500 uppercase tracking-wider">
+                        Current Turn
+                    </p>
+
+                    <p id="turnText"
+                       class="font-bold text-lg">
+                        Player X
+                    </p>
+                </div>
+
+            </div>
+
+
+            <!-- Board -->
+            <div
+                id="board"
+                class="grid grid-cols-3 gap-3
+                       p-3 rounded-3xl glass">
+
+                <!-- Cells generated by JavaScript -->
+
+            </div>
+
+
+            <!-- Controls -->
+            <div class="grid grid-cols-2 gap-3 mt-4">
+
+                <button
+                    id="resetBoardBtn"
+                    class="min-h-[52px] rounded-xl
+                           bg-indigo-600 hover:bg-indigo-500
+                           font-semibold transition
+                           flex items-center justify-center gap-2">
+
+                    <i data-lucide="rotate-ccw" class="w-5 h-5"></i>
+                    New Round
+
+                </button>
+
+
+                <button
+                    id="resetScoreBtn"
+                    class="min-h-[52px] rounded-xl
+                           bg-white/10 hover:bg-white/15
+                           font-semibold transition
+                           flex items-center justify-center gap-2">
+
+                    <i data-lucide="trash-2" class="w-5 h-5"></i>
+                    Reset Score
+
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- Footer -->
+        <footer class="text-center mt-8 text-xs text-slate-600">
+            Built with HTML, Tailwind CSS & JavaScript
+        </footer>
+
+    </main>
+
+
+    <!-- Toast -->
+    <div
+        id="toast"
+        class="fixed bottom-5 left-1/2 -translate-x-1/2
+               translate-y-24 opacity-0
+               glass rounded-xl px-5 py-3
+               text-sm font-medium
+               transition-all duration-300
+               z-50">
+    </div>
+
+
+    <!-- Winner Modal -->
+    <div
+        id="winnerModal"
+        class="fixed inset-0 z-40 hidden
+               items-center justify-center
+               bg-black/60 backdrop-blur-sm p-4">
+
+        <div
+            class="glass rounded-3xl p-8
+                   max-w-sm w-full text-center
+                   slide-up">
+
+            <div
+                id="winnerIcon"
+                class="mx-auto w-20 h-20 rounded-full
+                       bg-indigo-500/20
+                       flex items-center justify-center mb-5">
+
+                <i data-lucide="trophy"
+                   class="w-10 h-10 text-indigo-400">
+                </i>
+
+            </div>
+
+            <p class="text-xs uppercase tracking-[0.25em]
+                      text-slate-500 mb-2">
+                Game Over
+            </p>
+
+            <h2
+                id="winnerText"
+                class="text-3xl font-black mb-6">
+                Player X Wins!
+            </h2>
+
+            <button
+                id="nextRoundBtn"
+                class="w-full min-h-[52px]
+                       rounded-xl
+                       bg-indigo-600 hover:bg-indigo-500
+                       font-bold transition">
+
+                Next Round
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+(() => {
+
+    "use strict";
+
+    /* ==========================================
+       GAME CONFIGURATION
+    ========================================== */
+
+    const WINNING_COMBINATIONS = [
+        [0, 1, 2],
+        [3, 4, 5],
+        [6, 7, 8],
+        [0, 3, 6],
+        [1, 4, 7],
+        [2, 5, 8],
+        [0, 4, 8],
+        [2, 4, 6]
+    ];
+
+
+    /* ==========================================
+       GAME STATE
+    ========================================== */
+
+    const state = {
+        board: Array(9).fill(""),
+        currentPlayer: "X",
+        gameMode: "pvp",
+        difficulty: "easy",
+        gameOver: false,
+
+        scores: {
+            X: 0,
+            O: 0,
+            tie: 0
+        }
+    };
+
+
+    /* ==========================================
+       DOM ELEMENTS
+    ========================================== */
+
+    const boardElement =
+        document.getElementById("board");
+
+    const scoreX =
+        document.getElementById("scoreX");
+
+    const scoreO =
+        document.getElementById("scoreO");
+
+    const scoreTie =
+        document.getElementById("scoreTie");
+
+    const turnText =
+        document.getElementById("turnText");
+
+    const turnIcon =
+        document.getElementById("turnIcon");
+
+    const pvpBtn =
+        document.getElementById("pvpBtn");
+
+    const aiBtn =
+        document.getElementById("aiBtn");
+
+    const difficultyContainer =
+        document.getElementById("difficultyContainer");
+
+    const resetBoardBtn =
+        document.getElementById("resetBoardBtn");
+
+    const resetScoreBtn =
+        document.getElementById("resetScoreBtn");
+
+    const winnerModal =
+        document.getElementById("winnerModal");
+
+    const winnerText =
+        document.getElementById("winnerText");
+
+    const nextRoundBtn =
+        document.getElementById("nextRoundBtn");
+
+    const toast =
+        document.getElementById("toast");
+
+
+    /* ==========================================
+       INITIALIZE BOARD
+    ========================================== */
+
+    function createBoard() {
+
+        boardElement.innerHTML = "";
+
+        state.board.forEach((value, index) => {
+
+            const cell = document.createElement("button");
+
+            cell.className = `
+                board-cell
+                aspect-square
+                rounded-2xl
+                bg-white/[0.04]
+                border border-white/[0.08]
+                hover:bg-white/[0.10]
+                hover:border-white/[0.20]
+                transition-all
+                duration-200
+                flex items-center
+                justify-center
+                text-4xl
+                sm:text-5xl
+                font-black
+                select-none
+                touch-manipulation
+            `;
+
+            cell.dataset.index = index;
+
+            if (value === "X") {
+
+                cell.innerHTML = `
+                    <span class="text-indigo-400 pop-in">
+                        X
+                    </span>
+                `;
+
+            } else if (value === "O") {
+
+                cell.innerHTML = `
+                    <span class="text-pink-400 pop-in">
+                        O
+                    </span>
+                `;
+
+            }
+
+            cell.addEventListener("click", () => {
+                handleMove(index);
+            });
+
+            boardElement.appendChild(cell);
+        });
+    }
+
+
+    /* ==========================================
+       HANDLE PLAYER MOVE
+    ========================================== */
+
+    function handleMove(index) {
+
+        if (
+            state.gameOver ||
+            state.board[index] !== ""
+        ) {
+            return;
+        }
+
+        // Prevent clicking while AI is thinking
+        if (
+            state.gameMode === "ai" &&
+            state.currentPlayer === "O"
+        ) {
+            return;
+        }
+
+        state.board[index] =
+            state.currentPlayer;
+
+        renderGame();
+
+        const result = checkGame();
+
+        if (result) {
+
+            finishGame(result);
+
+            return;
+        }
+
+        switchTurn();
+
+        // AI turn
+        if (
+            state.gameMode === "ai" &&
+            state.currentPlayer === "O"
+        ) {
+
+            updateTurnIndicator();
+
+            setTimeout(makeAIMove, 400);
+        }
+    }
+
+
+    /* ==========================================
+       SWITCH TURN
+    ========================================== */
+
+    function switchTurn() {
+
+        state.currentPlayer =
+            state.currentPlayer === "X"
+                ? "O"
+                : "X";
+
+        updateTurnIndicator();
+    }
+
+
+    /* ==========================================
+       UPDATE TURN UI
+    ========================================== */
+
+    function updateTurnIndicator() {
+
+        const player = state.currentPlayer;
+
+        turnText.textContent =
+            player === "X"
+                ? "Player X"
+                : state.gameMode === "ai"
+                    ? "Computer"
+                    : "Player O";
+
+        turnIcon.innerHTML = `
+            <span class="font-black
+                ${player === "X"
+                    ? "text-indigo-400"
+                    : "text-pink-400"}">
+                ${player}
+            </span>
+        `;
+
+        turnIcon.className = `
+            w-10 h-10 rounded-full
+            flex items-center justify-center
+            ${player === "X"
+                ? "bg-indigo-500/20"
+                : "bg-pink-500/20"}
+        `;
+    }
+
+
+    /* ==========================================
+       CHECK WIN / DRAW
+    ========================================== */
+
+    function checkGame() {
+
+        for (const combination of WINNING_COMBINATIONS) {
+
+            const [a, b, c] = combination;
+
+            if (
+                state.board[a] &&
+                state.board[a] === state.board[b] &&
+                state.board[a] === state.board[c]
+            ) {
+
+                return {
+                    type: "win",
+                    player: state.board[a],
+                    combination
+                };
+            }
+        }
+
+        if (!state.board.includes("")) {
+
+            return {
+                type: "draw"
+            };
+        }
+
+        return null;
+    }
+
+
+    /* ==========================================
+       FINISH GAME
+    ========================================== */
+
+    function finishGame(result) {
+
+        state.gameOver = true;
+
+        if (result.type === "win") {
+
+            state.scores[result.player]++;
+
+            highlightWinningCells(
+                result.combination
+            );
+
+            updateScores();
+
+            winnerText.textContent =
+                result.player === "X"
+                    ? "Player X Wins!"
+                    : state.gameMode === "ai"
+                        ? "Computer Wins!"
+                        : "Player O Wins!";
+
+            createConfetti();
+
+            setTimeout(() => {
+                winnerModal.classList.remove("hidden");
+                winnerModal.classList.add("flex");
+            }, 500);
+
+            showToast(
+                result.player === "X"
+                    ? "Player X won the round!"
+                    : "Player O won the round!"
+            );
+
+        } else {
+
+            state.scores.tie++;
+
+            updateScores();
+
+            winnerText.textContent =
+                "It's a Draw!";
+
+            setTimeout(() => {
+                winnerModal.classList.remove("hidden");
+                winnerModal.classList.add("flex");
+            }, 400);
+
+            showToast("Nobody wins this round!");
+        }
+    }
+
+
+    /* ==========================================
+       HIGHLIGHT WINNING CELLS
+    ========================================== */
+
+    function highlightWinningCells(combination) {
+
+        const cells =
+            boardElement.children;
+
+        combination.forEach(index => {
+
+            cells[index].classList.add(
+                "winning-cell",
+                "bg-indigo-500/20",
+                "border-indigo-400/50"
+            );
+        });
+    }
+
+
+    /* ==========================================
+       AI MOVE
+    ========================================== */
+
+    function makeAIMove() {
+
+        if (state.gameOver) {
+            return;
+        }
+
+        let move;
+
+        if (state.difficulty === "easy") {
+
+            move = getRandomMove();
+
+        } else {
+
+            move = getBestMove();
+        }
+
+        if (move !== null) {
+
+            state.board[move] = "O";
+
+            renderGame();
+
+            const result = checkGame();
+
+            if (result) {
+
+                finishGame(result);
+
+                return;
+            }
+
+            switchTurn();
+        }
+    }
+
+
+    /* ==========================================
+       EASY AI
+    ========================================== */
+
+    function getRandomMove() {
+
+        const available =
+            state.board
+                .map((value, index) =>
+                    value === "" ? index : null
+                )
+                .filter(index => index !== null);
+
+        if (available.length === 0) {
+            return null;
+        }
+
+        return available[
+            Math.floor(
+                Math.random() * available.length
+            )
+        ];
+    }
+
+
+    /* ==========================================
+       HARD AI — MINIMAX
+    ========================================== */
+
+    function getBestMove() {
+
+        let bestScore = -Infinity;
+        let bestMove = null;
+
+        for (let i = 0; i < 9; i++) {
+
+            if (state.board[i] === "") {
+
+                state.board[i] = "O";
+
+                const score =
+                    minimax(
+                        state.board,
+                        false
+                    );
+
+                state.board[i] = "";
+
+                if (score > bestScore) {
+
+                    bestScore = score;
+                    bestMove = i;
+                }
+            }
+        }
+
+        return bestMove;
+    }
+
+
+    function minimax(board, isMaximizing) {
+
+        const result = evaluateBoard(board);
+
+        if (result !== null) {
+            return result;
+        }
+
+        if (isMaximizing) {
+
+            let bestScore = -Infinity;
+
+            for (let i = 0; i < 9; i++) {
+
+                if (board[i] === "") {
+
+                    board[i] = "O";
+
+                    const score =
+                        minimax(
+                            board,
+                            false
+                        );
+
+                    board[i] = "";
+
+                    bestScore =
+                        Math.max(
+                            bestScore,
+                            score
+                        );
+                }
+            }
+
+            return bestScore;
+
+        } else {
+
+            let bestScore = Infinity;
+
+            for (let i = 0; i < 9; i++) {
+
+                if (board[i] === "") {
+
+                    board[i] = "X";
+
+                    const score =
+                        minimax(
+                            board,
+                            true
+                        );
+
+                    board[i] = "";
+
+                    bestScore =
+                        Math.min(
+                            bestScore,
+                            score
+                        );
+                }
+            }
+
+            return bestScore;
+        }
+    }
+
+
+    /* ==========================================
+       MINIMAX BOARD EVALUATION
+    ========================================== */
+
+    function evaluateBoard(board) {
+
+        for (const combination of WINNING_COMBINATIONS) {
+
+            const [a, b, c] = combination;
+
+            if (
+                board[a] &&
+                board[a] === board[b] &&
+                board[a] === board[c]
+            ) {
+
+                return board[a] === "O"
+                    ? 10
+                    : -10;
+            }
+        }
+
+        if (!board.includes("")) {
+            return 0;
+        }
+
+        return null;
+    }
+
+
+    /* ==========================================
+       RENDER
+    ========================================== */
+
+    function renderGame() {
+
+        createBoard();
+    }
+
+
+    /* ==========================================
+       UPDATE SCORES
+    ========================================== */
+
+    function updateScores() {
+
+        scoreX.textContent =
+            state.scores.X;
+
+        scoreO.textContent =
+            state.scores.O;
+
+        scoreTie.textContent =
+            state.scores.tie;
+    }
+
+
+    /* ==========================================
+       RESET BOARD
+    ========================================== */
+
+    function resetBoard() {
+
+        state.board =
+            Array(9).fill("");
+
+        state.currentPlayer = "X";
+
+        state.gameOver = false;
+
+        winnerModal.classList.add("hidden");
+        winnerModal.classList.remove("flex");
+
+        renderGame();
+
+        updateTurnIndicator();
+    }
+
+
+    /* ==========================================
+       RESET SCORE
+    ========================================== */
+
+    function resetScore() {
+
+        state.scores.X = 0;
+        state.scores.O = 0;
+        state.scores.tie = 0;
+
+        updateScores();
+
+        resetBoard();
+
+        showToast("Scores have been reset.");
+    }
+
+
+    /* ==========================================
+       GAME MODE
+    ========================================== */
+
+    function setGameMode(mode) {
+
+        state.gameMode = mode;
+
+        if (mode === "pvp") {
+
+            pvpBtn.className = `
+                mode-btn rounded-xl px-4 py-3
+                min-h-[48px]
+                bg-indigo-600 text-white
+                font-semibold transition
+                hover:scale-[1.02]
+            `;
+
+            aiBtn.className = `
+                mode-btn rounded-xl px-4 py-3
+                min-h-[48px]
+                bg-white/5 text-slate-300
+                font-semibold transition
+                hover:bg-white/10
+            `;
+
+            difficultyContainer.classList.add("hidden");
+
+        } else {
+
+            aiBtn.className = `
+                mode-btn rounded-xl px-4 py-3
+                min-h-[48px]
+                bg-indigo-600 text-white
+                font-semibold transition
+                hover:scale-[1.02]
+            `;
+
+            pvpBtn.className = `
+                mode-btn rounded-xl px-4 py-3
+                min-h-[48px]
+                bg-white/5 text-slate-300
+                font-semibold transition
+                hover:bg-white/10
+            `;
+
+            difficultyContainer.classList.remove("hidden");
+        }
+
+        resetBoard();
+    }
+
+
+    /* ==========================================
+       DIFFICULTY
+    ========================================== */
+
+    function setDifficulty(difficulty) {
+
+        state.difficulty = difficulty;
+
+        document
+            .querySelectorAll(".difficulty-btn")
+            .forEach(button => {
+
+                const active =
+                    button.dataset.difficulty === difficulty;
+
+                button.classList.toggle(
+                    "bg-indigo-600",
+                    active
+                );
+
+                button.classList.toggle(
+                    "bg-white/5",
+                    !active
+                );
+            });
+
+        resetBoard();
+
+        showToast(
+            difficulty === "hard"
+                ? "Hard mode: AI is unbeatable."
+                : "Easy mode selected."
+        );
+    }
+
+
+    /* ==========================================
+       TOAST
+    ========================================== */
+
+    let toastTimer;
+
+    function showToast(message) {
+
+        toast.textContent = message;
+
+        toast.classList.remove(
+            "translate-y-24",
+            "opacity-0"
+        );
+
+        toast.classList.add(
+            "translate-y-0",
+            "opacity-100"
+        );
+
+        clearTimeout(toastTimer);
+
+        toastTimer = setTimeout(() => {
+
+            toast.classList.remove(
+                "translate-y-0",
+                "opacity-100"
+            );
+
+            toast.classList.add(
+                "translate-y-24",
+                "opacity-0"
+            );
+
+        }, 2500);
+    }
+
+
+    /* ==========================================
+       CONFETTI
+    ========================================== */
+
+    function createConfetti() {
+
+        const pieces = 70;
+
+        for (let i = 0; i < pieces; i++) {
+
+            const piece =
+                document.createElement("div");
+
+            piece.className = "confetti";
+
+            piece.style.left =
+                Math.random() * 100 + "%";
+
+            piece.style.background =
+                [
+                    "#818cf8",
+                    "#a78bfa",
+                    "#f472b6",
+                    "#fb7185",
+                    "#facc15"
+                ][
+                    Math.floor(
+                        Math.random() * 5
+                    )
+                ];
+
+            piece.style.animationDuration =
+                (2 + Math.random() * 2) + "s";
+
+            piece.style.animationDelay =
+                Math.random() * 0.5 + "s";
+
+            document.body.appendChild(piece);
+
+            setTimeout(() => {
+                piece.remove();
+            }, 4500);
+        }
+    }
+
+
+    /* ==========================================
+       EVENT LISTENERS
+    ========================================== */
+
+    pvpBtn.addEventListener(
+        "click",
+        () => setGameMode("pvp")
+    );
+
+    aiBtn.addEventListener(
+        "click",
+        () => setGameMode("ai")
+    );
+
+    document
+        .querySelectorAll(".difficulty-btn")
+        .forEach(button => {
+
+            button.addEventListener(
+                "click",
+                () => {
+                    setDifficulty(
+                        button.dataset.difficulty
+                    );
+                }
+            );
+        });
+
+    resetBoardBtn.addEventListener(
+        "click",
+        resetBoard
+    );
+
+    resetScoreBtn.addEventListener(
+        "click",
+        resetScore
+    );
+
+    nextRoundBtn.addEventListener(
+        "click",
+        resetBoard
+    );
+
+
+    /* ==========================================
+       INITIALIZE
+    ========================================== */
+
+    createBoard();
+
+    updateScores();
+
+    updateTurnIndicator();
+
+    lucide.createIcons();
+
+})();
+</script>
+
+</body>
+</html>
+```
